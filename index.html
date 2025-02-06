@@ -5,50 +5,59 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Will You Be My Valentine?</title>
   <style>
-    /* Global Reset and Border */
+    /* Global Reset */
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
       width: 100%;
     }
-    body {
-      /* A cute font and a border for the whole website */
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      overflow: hidden;
-      position: relative;
+    /* Container for the beginning and first pages */
+    #container {
+      width: 100vw;
+      height: 100vh;
       border: 5px solid #d32f2f;
       border-radius: 10px;
-      margin: 10px;
+      background-color: white;
+      overflow: hidden;
+      position: relative;
+    }
+    /* Use a cute font */
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
     }
     /* ---------- Beginning Page ---------- */
     #beginning-page {
       background-color: #ff9ef0;
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
       padding: 20px;
     }
-    #beginning-page .letter {
-      background: #fff;
-      border: 2px solid #d32f2f;
-      border-radius: 10px;
-      padding: 30px;
+    #beginning-page img {
       max-width: 90%;
+      border-radius: 10px;
       cursor: pointer;
-      transition: background 0.3s ease;
     }
-    #beginning-page .letter:hover {
-      background-color: #ffe;
+    .popup {
+      margin-top: 20px;
+      font-size: 1.5rem;
+      color: #d32f2f;
+      animation: pop 1s infinite alternate;
+    }
+    @keyframes pop {
+      from { transform: scale(1); }
+      to { transform: scale(1.1); }
     }
     /* ---------- First Page ---------- */
     #first-page {
       background-color: #ff9ef0;
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
       display: none;
       flex-direction: column;
       justify-content: center;
@@ -125,7 +134,7 @@
       font-size: 2.5rem;
       margin-bottom: 10px;
     }
-    /* CSS Rain Effect (with falling raindrops) */
+    /* CSS Rain Effect (falling raindrops) */
     .rain {
       position: absolute;
       top: 0;
@@ -204,30 +213,32 @@
   </style>
 </head>
 <body>
-  <!-- Beginning Page -->
-  <div id="beginning-page">
-    <div class="letter" onclick="openLetter()">
-      <h1>Dear Linnie,</h1>
-      <p>I have a little surprise for you. Tap this letter to open and discover!</p>
+  <!-- Container for Beginning and First Pages -->
+  <div id="container">
+    <!-- Beginning Page -->
+    <div id="beginning-page">
+      <!-- Replace the letter with the loveletter.jpg image -->
+      <img src="loveletter.jpg" alt="Love Letter" onclick="openLetter()" />
+      <div class="popup">Press on it</div>
     </div>
-  </div>
-
-  <!-- First Page -->
-  <div id="first-page">
-    <h1>Hey Linnie, sorry for the wait.</h1>
-    <p>Are you ready?</p>
-    <!-- Animated photo GIF (photo.gif) -->
-    <img src="photo.gif" alt="Our Photo" />
-    <div class="button-container">
-      <button id="green-button" class="button green" onclick="handleGreenClick()">Yes!</button>
-      <button id="red-button" class="button red" onclick="handleRedClick()">No, I'm not ready</button>
+    
+    <!-- First Page -->
+    <div id="first-page">
+      <h1>Hey Linnie, sorry for the wait.</h1>
+      <p>Are you ready?</p>
+      <!-- Animated photo GIF (photo.gif) -->
+      <img src="photo.gif" alt="Our Photo" />
+      <div class="button-container">
+        <button id="green-button" class="button green" onclick="handleGreenClick()">Yes!</button>
+        <button id="red-button" class="button red" onclick="handleRedClick()">No, I'm not ready</button>
+      </div>
     </div>
   </div>
 
   <!-- Sad Page -->
   <div id="sad-page" class="sad-page">
     <div class="rain">
-      <!-- Generate a few raindrops with different positions and delays -->
+      <!-- Generate raindrops -->
       <div class="drop" style="left: 10%; animation-delay: 0s;"></div>
       <div class="drop" style="left: 20%; animation-delay: 0.2s;"></div>
       <div class="drop" style="left: 30%; animation-delay: 0.4s;"></div>
@@ -264,6 +275,7 @@
   <script>
     /* --- Beginning Page --- */
     function openLetter() {
+      // Hide beginning page and show the first page (inside the container)
       document.getElementById('beginning-page').style.display = 'none';
       document.getElementById('first-page').style.display = 'flex';
     }
@@ -299,14 +311,14 @@
       } else if (redButtonPressCount === 2) {
         redButton.textContent = "I'll be sad";
       } else if (redButtonPressCount === 3) {
-        document.getElementById('first-page').style.display = 'none';
+        document.getElementById('container').style.display = 'none';
         document.getElementById('sad-page').style.display = 'flex';
       }
     }
 
     /* --- Transition to Happy Page --- */
     function showHappyPage() {
-      document.getElementById('first-page').style.display = 'none';
+      document.getElementById('container').style.display = 'none';
       document.getElementById('happy-page').style.display = 'flex';
       startCountdown();
     }
