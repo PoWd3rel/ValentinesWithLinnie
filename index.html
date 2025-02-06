@@ -5,26 +5,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Will You Be My Valentine?</title>
   <style>
-    /* Reset default margins and paddings */
+    /* Global Reset and Border */
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
       width: 100%;
     }
-    /* Global body style */
     body {
-      font-family: Arial, sans-serif;
+      /* A cute font and a border for the whole website */
+      font-family: 'Comic Sans MS', cursive, sans-serif;
       overflow: hidden;
       position: relative;
+      border: 5px solid #d32f2f;
+      border-radius: 10px;
+      margin: 10px;
     }
-    /* -------- First Page -------- */
-    #first-page {
-      background: url('custom-bg.jpg') no-repeat center center;
-      background-size: cover;
+    /* ---------- Beginning Page ---------- */
+    #beginning-page {
+      background-color: #ff9ef0;
       width: 100vw;
       height: 100vh;
       display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+    }
+    #beginning-page .letter {
+      background: #fff;
+      border: 2px solid #d32f2f;
+      border-radius: 10px;
+      padding: 30px;
+      max-width: 90%;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    #beginning-page .letter:hover {
+      background-color: #ffe;
+    }
+    /* ---------- First Page ---------- */
+    #first-page {
+      background-color: #ff9ef0;
+      width: 100vw;
+      height: 100vh;
+      display: none;
       flex-direction: column;
       justify-content: center;
       align-items: center;
@@ -73,8 +98,7 @@
     .red:hover {
       background-color: #d32f2f;
     }
-    
-    /* -------- Sad Page -------- */
+    /* ---------- Sad Page ---------- */
     .sad-page {
       background-color: #2c3e50;
       position: fixed;
@@ -82,54 +106,50 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      overflow: hidden;
-      display: flex;
+      display: none;
       justify-content: center;
       align-items: center;
+      overflow: hidden;
     }
-    /* Container for sad page content */
     .sad-content {
       position: relative;
-      z-index: 1;
+      z-index: 2;
       text-align: center;
       color: white;
     }
     .sad-content img {
-      width: 150px;
+      width: 300px; /* larger sad gif */
       margin-bottom: 20px;
     }
     .sad-content h1 {
       font-size: 2.5rem;
       margin-bottom: 10px;
     }
-    /* CSS rain effect overlay */
+    /* CSS Rain Effect (with falling raindrops) */
     .rain {
-      pointer-events: none;
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: 2;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
     }
-    .rain::before {
-      content: "";
+    .drop {
       position: absolute;
-      top: -100%;
-      left: 0;
-      width: 100%;
-      height: 200%;
-      background-image: linear-gradient(transparent 95%, rgba(255, 255, 255, 0.3) 100%);
-      background-size: 1px 10px;
-      animation: rainAnim 0.5s linear infinite;
+      width: 2px;
+      height: 15px;
+      background: rgba(255,255,255,0.7);
+      animation: drop 0.8s linear infinite;
     }
-    @keyframes rainAnim {
-      to { transform: translateY(10px); }
+    @keyframes drop {
+      0% { transform: translateY(-20px); opacity: 1; }
+      100% { transform: translateY(100vh); opacity: 0; }
     }
-    
-    /* -------- Happy Page -------- */
+    /* ---------- Happy Page ---------- */
     .happy-page {
-      background-color: #ffebee;
+      background-color: #ff9ef0;
       width: 100vw;
       height: 100vh;
       position: fixed;
@@ -153,18 +173,50 @@
     }
     .final-content img {
       max-width: 90%;
+      width: 300px; /* larger happy gif */
       height: auto;
       border-radius: 10px;
       margin-bottom: 20px;
     }
+    /* Confetti Effect */
+    #confetti {
+      pointer-events: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 3;
+      overflow: hidden;
+    }
+    .confetti-piece {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background-color: red;
+      opacity: 0.7;
+      animation: confettiFall 3s linear infinite;
+    }
+    @keyframes confettiFall {
+      0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
   </style>
 </head>
 <body>
+  <!-- Beginning Page -->
+  <div id="beginning-page">
+    <div class="letter" onclick="openLetter()">
+      <h1>Dear Linnie,</h1>
+      <p>I have a little surprise for you. Tap this letter to open and discover!</p>
+    </div>
+  </div>
+
   <!-- First Page -->
   <div id="first-page">
     <h1>Hey Linnie, sorry for the wait.</h1>
     <p>Are you ready?</p>
-    <!-- Animated photo GIF (name this file "photo.gif") -->
+    <!-- Animated photo GIF (photo.gif) -->
     <img src="photo.gif" alt="Our Photo" />
     <div class="button-container">
       <button id="green-button" class="button green" onclick="handleGreenClick()">Yes!</button>
@@ -173,11 +225,22 @@
   </div>
 
   <!-- Sad Page -->
-  <div id="sad-page" class="sad-page" style="display: none;">
-    <!-- CSS Rain overlay -->
-    <div class="rain"></div>
+  <div id="sad-page" class="sad-page">
+    <div class="rain">
+      <!-- Generate a few raindrops with different positions and delays -->
+      <div class="drop" style="left: 10%; animation-delay: 0s;"></div>
+      <div class="drop" style="left: 20%; animation-delay: 0.2s;"></div>
+      <div class="drop" style="left: 30%; animation-delay: 0.4s;"></div>
+      <div class="drop" style="left: 40%; animation-delay: 0.6s;"></div>
+      <div class="drop" style="left: 50%; animation-delay: 0.8s;"></div>
+      <div class="drop" style="left: 60%; animation-delay: 1s;"></div>
+      <div class="drop" style="left: 70%; animation-delay: 1.2s;"></div>
+      <div class="drop" style="left: 80%; animation-delay: 1.4s;"></div>
+      <div class="drop" style="left: 90%; animation-delay: 1.6s;"></div>
+      <div class="drop" style="left: 95%; animation-delay: 1.8s;"></div>
+    </div>
     <div class="sad-content">
-      <!-- Sad emoji GIF (name this file "sad-emoji.gif") -->
+      <!-- Sad emoji GIF (sad-emoji.gif) -->
       <img src="sad-emoji.gif" alt="Sad Emoji" />
       <h1>Okay...</h1>
     </div>
@@ -185,9 +248,9 @@
 
   <!-- Happy Page -->
   <div id="happy-page" class="happy-page">
-    <div class="countdown" id="countdown">Three...</div>
+    <div class="countdown" id="countdown">3</div>
     <div class="final-content" id="final-content">
-      <!-- Happy GIF (name this file "happy.gif") -->
+      <!-- Happy GIF (happy.gif) -->
       <img src="happy.gif" alt="Happy GIF" />
       <h1>Will you be my Valentine?</h1>
       <div class="button-container">
@@ -195,9 +258,17 @@
         <button id="happy-no" class="button green" onclick="handleHappyNoClick()">You cant say no!</button>
       </div>
     </div>
+    <div id="confetti"></div>
   </div>
 
   <script>
+    /* --- Beginning Page --- */
+    function openLetter() {
+      document.getElementById('beginning-page').style.display = 'none';
+      document.getElementById('first-page').style.display = 'flex';
+    }
+
+    /* --- First Page Buttons --- */
     let redButtonPressCount = 0;
     let greenButtonPressCount = 0;
     const greenButton = document.getElementById('green-button');
@@ -205,18 +276,14 @@
 
     function handleGreenClick() {
       greenButtonPressCount++;
-      // Increase the size noticeably (scale increases by 0.3 each click)
       const scaleFactor = 1 + 0.3 * greenButtonPressCount;
       greenButton.style.transform = `scale(${scaleFactor})`;
       greenButton.style.fontSize = `${1.2 * scaleFactor}rem`;
       greenButton.style.padding = `${15 * scaleFactor}px ${30 * scaleFactor}px`;
-
-      // Change text with each press:
       if (greenButtonPressCount === 1) {
         greenButton.textContent = "Really? :)";
       } else if (greenButtonPressCount === 2) {
         greenButton.textContent = "OH MY GOD";
-        // After a short delay, redirect to happy page
         setTimeout(showHappyPage, 1000);
       }
     }
@@ -227,42 +294,56 @@
       redButton.style.transform = `scale(${scaleFactor})`;
       redButton.style.fontSize = `${1.2 * scaleFactor}rem`;
       redButton.style.padding = `${15 * scaleFactor}px ${30 * scaleFactor}px`;
-
       if (redButtonPressCount === 1) {
         redButton.textContent = "Are you sure?";
       } else if (redButtonPressCount === 2) {
         redButton.textContent = "I'll be sad";
       } else if (redButtonPressCount === 3) {
-        // Hide the first page and display the sad page
         document.getElementById('first-page').style.display = 'none';
         document.getElementById('sad-page').style.display = 'flex';
       }
     }
 
-    // Show Happy Page and start countdown
+    /* --- Transition to Happy Page --- */
     function showHappyPage() {
       document.getElementById('first-page').style.display = 'none';
       document.getElementById('happy-page').style.display = 'flex';
       startCountdown();
     }
 
-    // Countdown for happy page
+    /* --- Countdown for Happy Page --- */
     function startCountdown() {
       const countdownElem = document.getElementById('countdown');
       let count = 3;
       const timer = setInterval(() => {
         count--;
-        if (count > 0) {
-          countdownElem.textContent = count + "...";
+        if(count > 0) {
+          countdownElem.textContent = count;
         } else {
           clearInterval(timer);
           countdownElem.style.display = 'none';
           document.getElementById('final-content').style.display = 'flex';
+          launchConfetti();
         }
       }, 1000);
     }
 
-    // Happy page buttons (scaling effect similar to before)
+    /* --- Confetti Effect --- */
+    function launchConfetti() {
+      const confettiContainer = document.getElementById('confetti');
+      confettiContainer.innerHTML = '';
+      const colors = ['#FFC107', '#FF5722', '#8BC34A', '#00BCD4', '#E91E63'];
+      for (let i = 0; i < 30; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti-piece');
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.animationDelay = Math.random() * 3 + 's';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confettiContainer.appendChild(confetti);
+      }
+    }
+
+    /* --- Happy Page Buttons --- */
     let happyYesCount = 0;
     let happyNoCount = 0;
     const happyYes = document.getElementById('happy-yes');
@@ -274,7 +355,6 @@
       happyYes.style.transform = `scale(${scaleFactor})`;
       happyYes.style.fontSize = `${1.2 * scaleFactor}rem`;
       happyYes.style.padding = `${15 * scaleFactor}px ${30 * scaleFactor}px`;
-      // You can add further action here if desired.
       alert("You made me the happiest!");
     };
 
@@ -284,7 +364,6 @@
       happyNo.style.transform = `scale(${scaleFactor})`;
       happyNo.style.fontSize = `${1.2 * scaleFactor}rem`;
       happyNo.style.padding = `${15 * scaleFactor}px ${30 * scaleFactor}px`;
-      // You can add further action here if desired.
       alert("I knew you couldn't say no!");
     };
   </script>
