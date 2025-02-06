@@ -5,15 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Will You Be My Valentine?</title>
   <style>
+    /* Reset default margins and paddings for full-screen usage */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+    }
     body {
       font-family: Arial, sans-serif;
       text-align: center;
       background-color: #ffebee; /* Light pink background */
       color: #d32f2f; /* Dark red text */
-      padding: 50px;
-      margin: 0;
-      overflow: hidden; /* Prevent scrolling */
+      overflow: hidden;
       position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
     h1 {
       font-size: 3rem;
@@ -26,7 +35,7 @@
     .button-container {
       display: flex;
       justify-content: center;
-      gap: 20px; /* Space between buttons */
+      gap: 20px;
     }
     .button {
       padding: 15px 30px;
@@ -35,41 +44,39 @@
       border-radius: 5px;
       cursor: pointer;
       color: white;
-      transition: transform 0.2s ease;
-    }
-    .button:hover {
-      transform: scale(1.1); /* Slightly enlarge on hover */
+      transition: transform 0.3s ease, font-size 0.3s ease, padding 0.3s ease;
     }
     .green {
-      background-color: #4caf50; /* Green button */
+      background-color: #4caf50;
     }
     .green:hover {
-      background-color: #388e3c; /* Darker green on hover */
+      background-color: #388e3c;
     }
     .red {
-      background-color: #f44336; /* Red button */
+      background-color: #f44336;
     }
     .red:hover {
-      background-color: #d32f2f; /* Darker red on hover */
+      background-color: #d32f2f;
     }
     img {
-      max-width: 100%;
+      max-width: 90%;
       height: auto;
       border-radius: 10px;
       margin-top: 20px;
     }
-
-    /* Sad Page Styles */
+    /* Full-Screen Sad Page */
     .sad-page {
-      background-color: #2c3e50; /* Dark gray-blue background */
-      color: white;
+      background-color: #2c3e50; /* Dark gray-blue */
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100vw;
       height: 100vh;
+      color: white;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      position: relative;
       overflow: hidden;
     }
     .rain {
@@ -78,19 +85,15 @@
       left: 0;
       width: 100%;
       height: 100%;
-      /* Use your local rain image (ensure the file exists in the images folder) */
-      background: url('images/rain.png');
+      z-index: 0;
+      /* Use your local rain GIF (place "rain.gif" in the same directory as this HTML file) */
+      background: url('rain.gif');
       background-repeat: repeat;
       background-size: auto;
-      animation: rain 0.5s linear infinite;
     }
-    @keyframes rain {
-      0% {
-        background-position: 0 0;
-      }
-      100% {
-        background-position: 20% 100%;
-      }
+    .sad-page > * {
+      position: relative;
+      z-index: 1;
     }
     .sad-page img {
       width: 150px;
@@ -107,8 +110,8 @@
   <div id="first-page">
     <h1>Hey Linnie, sorry for the wait.</h1>
     <p>Are you ready?</p>
-    <!-- Update the image source to your GIF file -->
-    <img src="images/photo.gif" alt="Our Photo" />
+    <!-- Using local GIF for your photo (name this file "photo.gif") -->
+    <img src="photo.gif" alt="Our Photo" />
     <div class="button-container">
       <button id="green-button" class="button green" onclick="handleGreenClick()">Yes!</button>
       <button id="red-button" class="button red" onclick="handleRedClick()">No, I'm not ready</button>
@@ -118,8 +121,8 @@
   <!-- Sad Page (Hidden by Default) -->
   <div id="sad-page" class="sad-page" style="display: none;">
     <div class="rain"></div>
-    <!-- Update the image source to your GIF file -->
-    <img src="images/sad-emoji.gif" alt="Sad Emoji" />
+    <!-- Using local GIF for the sad emoji (name this file "sad-emoji.gif") -->
+    <img src="sad-emoji.gif" alt="Sad Emoji" />
     <h1>Okay...</h1>
   </div>
 
@@ -130,24 +133,29 @@
     function handleGreenClick() {
       const greenButton = document.getElementById('green-button');
       greenButtonPressCount++;
-      // Increase the scale a bit more with each press
-      greenButton.style.transform = `scale(${1 + 0.1 * greenButtonPressCount})`;
-      // Change the text to "Really? :)"
+      // Increase the button's size more noticeably on each click
+      const scaleFactor = 1 + 0.2 * greenButtonPressCount;
+      greenButton.style.transform = `scale(${scaleFactor})`;
+      greenButton.style.fontSize = `${1.2 * scaleFactor}rem`;
+      greenButton.style.padding = `${15 * scaleFactor}px ${30 * scaleFactor}px`;
+      // Change text to "Really? :)"
       greenButton.textContent = "Really? :)";
     }
 
     function handleRedClick() {
       const redButton = document.getElementById('red-button');
       redButtonPressCount++;
-      // Increase the scale a bit more with each press
-      redButton.style.transform = `scale(${1 + 0.1 * redButtonPressCount})`;
+      const scaleFactor = 1 + 0.2 * redButtonPressCount;
+      redButton.style.transform = `scale(${scaleFactor})`;
+      redButton.style.fontSize = `${1.2 * scaleFactor}rem`;
+      redButton.style.padding = `${15 * scaleFactor}px ${30 * scaleFactor}px`;
 
       if (redButtonPressCount === 1) {
         redButton.textContent = "Are you sure?";
       } else if (redButtonPressCount === 2) {
         redButton.textContent = "I'll be sad";
       } else if (redButtonPressCount === 3) {
-        // Switch to the sad page
+        // Hide the first page and display the sad page full-screen
         document.getElementById('first-page').style.display = 'none';
         document.getElementById('sad-page').style.display = 'flex';
       }
