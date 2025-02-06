@@ -11,20 +11,24 @@
       padding: 0;
       height: 100%;
       width: 100%;
-    }
-    /* Container for the beginning and first pages */
-    #container {
-      width: 100vw;
-      height: 100vh;
-      border: 5px solid #d32f2f;
-      border-radius: 10px;
-      background-color: white;
-      overflow: hidden;
-      position: relative;
+      background-color: #ffffff;
     }
     /* Use a cute font */
     body {
       font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
+    /* Container for the beginning and first pages */
+    #container {
+      width: 90%;
+      max-width: 600px;
+      height: 90vh;
+      margin: 20px auto;
+      border: 5px solid #d32f2f;
+      border-radius: 20px;
+      background-color: white;
+      overflow: hidden;
+      position: relative;
+      transition: all 0.5s ease;
     }
     /* ---------- Beginning Page ---------- */
     #beginning-page {
@@ -37,6 +41,7 @@
       align-items: center;
       text-align: center;
       padding: 20px;
+      transition: opacity 0.5s ease;
     }
     #beginning-page img {
       max-width: 90%;
@@ -217,9 +222,9 @@
   <div id="container">
     <!-- Beginning Page -->
     <div id="beginning-page">
-      <!-- Replace the letter with the loveletter.jpg image -->
+      <!-- Use the loveletter.jpg image instead of the letter text -->
       <img src="loveletter.jpg" alt="Love Letter" onclick="openLetter()" />
-      <div class="popup">Press on it</div>
+      <div class="popup">Click on the letter :3</div>
     </div>
     
     <!-- First Page -->
@@ -275,9 +280,13 @@
   <script>
     /* --- Beginning Page --- */
     function openLetter() {
-      // Hide beginning page and show the first page (inside the container)
-      document.getElementById('beginning-page').style.display = 'none';
-      document.getElementById('first-page').style.display = 'flex';
+      // Add a smooth fade-out transition when the letter is clicked
+      const beginningPage = document.getElementById('beginning-page');
+      beginningPage.style.opacity = 0;
+      setTimeout(() => {
+        beginningPage.style.display = 'none';
+        document.getElementById('first-page').style.display = 'flex';
+      }, 500);
     }
 
     /* --- First Page Buttons --- */
