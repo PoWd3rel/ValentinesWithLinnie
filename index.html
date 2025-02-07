@@ -35,6 +35,15 @@
       position: relative;
       transition: opacity 0.5s ease;
     }
+    /* Decorative Bow */
+    .bow {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      top: -20px;
+      right: -20px;
+      z-index: 2;
+    }
     /* ---------- Beginning Page ---------- */
     #beginning-page {
       background-color: #ff9ef0;
@@ -269,7 +278,7 @@
       color: #d32f2f; /* Match subheading color */
     }
     .checklist-left img {
-      max-width: 100%;
+      max-width: 80%; /* Smaller image */
       border-radius: 8px;
       margin-bottom: 10px;
     }
@@ -353,65 +362,22 @@
       border-radius: 10px;
       margin-top: 20px;
     }
-    /* ---------- Comment Section ---------- */
-    .comment-section {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      width: 300px;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-    .comment-section h2 {
-      font-size: 1.5rem;
-      color: #d32f2f;
-      margin-bottom: 10px;
-    }
-    .comment-section textarea {
-      width: 100%;
-      height: 100px;
-      padding: 10px;
-      border: 2px solid #d32f2f;
-      border-radius: 8px;
-      font-family: 'Poppins', sans-serif;
-      font-size: 1rem;
-      margin-bottom: 10px;
-    }
-    .comment-section button {
-      padding: 10px 20px;
-      background-color: #d32f2f;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-    .comment-section button:hover {
-      background-color: #b71c1c;
-    }
-    .comment-list {
-      margin-top: 20px;
-      text-align: left;
-    }
-    .comment-list p {
-      font-size: 1rem;
-      color: #333;
-      margin: 5px 0;
-    }
     /* ---------- Spotify Embed ---------- */
     .spotify-embed {
       margin-top: 20px;
     }
     .spotify-embed iframe {
       border-radius: 12px;
+      width: 300px; /* Smaller Spotify embed */
+      height: 80px;
     }
   </style>
 </head>
 <body>
   <!-- Container for Beginning and First Pages -->
   <div id="container">
+    <!-- Decorative Bow -->
+    <img src="bow.png" alt="Bow" class="bow" />
     <!-- Beginning Page -->
     <div id="beginning-page">
       <img src="loveletter.jpg" alt="Love Letter" onclick="openLetter()" />
@@ -485,7 +451,7 @@
           <li onclick="toggleCheck(this)">Dress Pretty</li>
           <li onclick="toggleCheck(this)">Be yourself</li>
           <li onclick="toggleCheck(this)">Smile (cause I love when you do)</li>
-          <li onclick="toggleCheck(this)">Make sure you enjoy my time with me</li>
+          <li onclick="toggleCheck(this)">Make sure to enjoy our date</li>
         </ul>
       </div>
     </div>
@@ -495,20 +461,15 @@
   
   <!-- Final Page -->
   <div id="final-page" class="final-page">
-    <div style="background-color: #fff; border-radius: 20px; padding: 20px; max-width: 800px; width: 90%; text-align: center;">
+    <div style="background-color: #fff; border-radius: 20px; padding: 20px; max-width: 800px; width: 90%; text-align: center; position: relative;">
+      <!-- Decorative Bow -->
+      <img src="bow.png" alt="Bow" class="bow" />
       <h1>Thank you baby. I’ll make sure you have a great time. See you on the 14th 💖</h1>
       <img src="final-gif.gif" alt="Final GIF" style="max-width: 90%; height: auto; border-radius: 10px; margin-top: 20px;" />
       <!-- Spotify Embed -->
       <div class="spotify-embed">
-        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/37CoOXIsgF3NzbK1zHZetk?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/37CoOXIsgF3NzbK1zHZetk?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
       </div>
-    </div>
-    <!-- Comment Section -->
-    <div class="comment-section">
-      <h2>Leave a Comment 💌</h2>
-      <textarea id="comment-input" placeholder="Write your comment here..."></textarea>
-      <button onclick="addComment()">Submit</button>
-      <div class="comment-list" id="comment-list"></div>
     </div>
   </div>
   
@@ -661,37 +622,6 @@
         document.getElementById('final-page').style.opacity = 1;
       }, 500);
     }
-    
-    // ---------- Comment Section Functionality ----------
-    function addComment() {
-      const commentInput = document.getElementById('comment-input');
-      const commentList = document.getElementById('comment-list');
-      if (commentInput.value.trim() === "") return;
-      
-      // Save comment to localStorage
-      const comments = JSON.parse(localStorage.getItem('comments') || '[]');
-      comments.push(commentInput.value);
-      localStorage.setItem('comments', JSON.stringify(comments));
-      
-      // Display comment
-      const commentElement = document.createElement('p');
-      commentElement.textContent = commentInput.value;
-      commentList.appendChild(commentElement);
-      
-      // Clear input
-      commentInput.value = '';
-    }
-    
-    // Load comments on page load
-    window.onload = function () {
-      const comments = JSON.parse(localStorage.getItem('comments') || '[]');
-      const commentList = document.getElementById('comment-list');
-      comments.forEach(comment => {
-        const commentElement = document.createElement('p');
-        commentElement.textContent = comment;
-        commentList.appendChild(commentElement);
-      });
-    };
   </script>
 </body>
 </html>
