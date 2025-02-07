@@ -7,18 +7,20 @@
   <!-- Use a clean, modern Google font -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
-    /* Global reset and clean background */
+    /* Global reset and apply the subtle dot pattern to the entire page */
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
       width: 100%;
-      background-color: #fafafa;
+      /* Subtle dot pattern: tiny pastel pink dots on white */
+      background-color: #fff;
+      background-image: radial-gradient(circle, #ff9ef0 1px, transparent 1px);
+      background-size: 20px 20px;
       font-family: 'Poppins', sans-serif;
       overflow-x: hidden;
     }
-    /* Clean container with white background and subtle red border,
-       plus a subtle radial dot pattern to add some texture */
+    /* Clean container with white background, red border, and the same dot pattern */
     #container {
       width: 100%;
       max-width: 1100px;
@@ -27,7 +29,6 @@
       border: 4px solid #d32f2f;
       border-radius: 20px;
       background-color: #fff;
-      /* Subtle dot pattern: tiny pastel pink dots on white */
       background-image: radial-gradient(circle, #ff9ef0 1px, transparent 1px);
       background-size: 20px 20px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -52,7 +53,6 @@
       max-width: 80%;
       border-radius: 10px;
       cursor: pointer;
-      /* Removed any box-shadow so the image shows as before */
     }
     .popup {
       margin-top: 20px;
@@ -92,7 +92,6 @@
       height: auto;
       border-radius: 10px;
       margin-top: 20px;
-      /* Removed box-shadow so it appears without a border */
     }
     .button-container {
       display: flex;
@@ -143,7 +142,6 @@
     .sad-content img {
       width: 300px;
       margin-bottom: 20px;
-      /* Removed box-shadow */
     }
     .sad-content h1 {
       font-size: 2.5rem;
@@ -214,7 +212,6 @@
       height: auto;
       border-radius: 10px;
       margin-bottom: 20px;
-      /* Removed box-shadow */
     }
     /* ---------- Confetti Effect ---------- */
     #confetti {
