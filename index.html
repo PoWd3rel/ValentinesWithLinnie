@@ -244,6 +244,7 @@
       justify-content: space-between;
       align-items: flex-start;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      position: relative;
     }
     .checklist-left, .checklist-right {
       flex: 1;
@@ -252,6 +253,7 @@
     .checklist-left {
       border-right: 2px solid #d32f2f;
       padding-right: 20px;
+      margin-top: 60px; /* Move the line down */
     }
     /* Left column: Location & map info */
     .checklist-left h2 {
@@ -264,7 +266,7 @@
       font-size: 1.4rem;
       margin-bottom: 20px;
       font-weight: 300;
-      color: #333;
+      color: #d32f2f; /* Match subheading color */
     }
     .checklist-left img {
       max-width: 100%;
@@ -429,6 +431,7 @@
   
   <!-- Checklist Page -->
   <div id="checklist-page" class="checklist-page">
+    <h2 style="font-size: 2.5rem; color: #d32f2f; margin-bottom: 20px;">Our Special Date Checklist</h2>
     <div class="checklist-container">
       <!-- Left Column: Location & Map Info -->
       <div class="checklist-left">
@@ -441,11 +444,10 @@
       <div class="checklist-right">
         <h2>Checklist:</h2>
         <ul>
-          <li onclick="toggleCheck(this)">Dress Cute</li>
-          <li onclick="toggleCheck(this)">Smile</li>
-          <li onclick="toggleCheck(this)">Bring your gorgeous self</li>
-          <li onclick="toggleCheck(this)">Be ready for surprises</li>
-          <li onclick="toggleCheck(this)">Let's have fun together</li>
+          <li onclick="toggleCheck(this)">Dress Pretty</li>
+          <li onclick="toggleCheck(this)">Be yourself</li>
+          <li onclick="toggleCheck(this)">Smile (cause I love when you do)</li>
+          <li onclick="toggleCheck(this)">Make sure you enjoy my time with me</li>
         </ul>
       </div>
     </div>
@@ -455,8 +457,10 @@
   
   <!-- Final Page -->
   <div id="final-page" class="final-page">
-    <h1>Thank you for saying yes! 💖</h1>
-    <img src="final-image.jpg" alt="Final Image" />
+    <div style="background-color: #fff; border-radius: 20px; padding: 20px; max-width: 800px; width: 90%; text-align: center;">
+      <h1>Thank you baby. I’ll make sure you have a great time. See you on the 14th 💖</h1>
+      <img src="final-gif.gif" alt="Final GIF" style="max-width: 90%; height: auto; border-radius: 10px; margin-top: 20px;" />
+    </div>
   </div>
   
   <script>
