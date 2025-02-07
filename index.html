@@ -6,6 +6,7 @@
   <title>Will You Be My Valentine?</title>
   <!-- Use a clean, modern Google font -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
   <style>
     /* Global Reset & Background with Subtle Dot Pattern */
     html, body {
@@ -220,9 +221,7 @@
     }
     /* ---------- Checklist Page ---------- */
     .checklist-page {
-      background-color: #fff;
-      background-image: radial-gradient(circle, #ff9ef0 1px, transparent 1px);
-      background-size: 20px 20px;
+      background-color: #d32f2f; /* Red background */
       width: 100vw;
       height: 100vh;
       display: none;
@@ -234,53 +233,36 @@
       transition: opacity 0.5s ease;
     }
     .checklist-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 40px;
-      justify-content: center;
-      align-items: flex-start;
-      max-width: 1000px;
-      margin: 0 auto;
+      background-color: #fff;
+      border-radius: 20px;
+      padding: 20px;
+      max-width: 800px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
-    .checklist-left, .checklist-right {
-      flex: 1 1 300px;
-      min-width: 300px;
-    }
-    /* Thin red line to split the page */
-    .checklist-left {
-      border-right: 2px solid #d32f2f;
-      padding-right: 20px;
-    }
-    /* Left column: Location & map info */
-    .checklist-left h2 {
-      font-size: 2rem;
-      margin-bottom: 10px;
-      font-weight: 600;
+    .checklist-container h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      font-family: 'Dancing Script', cursive;
       color: #d32f2f;
     }
-    .checklist-left p {
+    .checklist-container p {
       font-size: 1.4rem;
       margin-bottom: 20px;
-      font-weight: 300;
+      font-family: 'Dancing Script', cursive;
       color: #333;
     }
-    .checklist-left img {
+    .checklist-container img {
       max-width: 100%;
       border-radius: 8px;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
     }
-    /* Right column: Checklist */
-    .checklist-right h2 {
-      font-size: 2rem;
-      margin-bottom: 10px;
-      font-weight: 600;
-      color: #d32f2f;
-    }
-    .checklist-right ul {
+    .checklist-container ul {
       list-style: none;
       padding: 0;
     }
-    .checklist-right li {
+    .checklist-container li {
       font-size: 1.4rem;
       margin: 10px 0;
       padding: 10px 20px;
@@ -289,13 +271,14 @@
       cursor: pointer;
       position: relative;
       transition: background 0.3s;
-      text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+      font-family: 'Dancing Script', cursive;
+      color: #333;
     }
-    .checklist-right li.checked {
+    .checklist-container li.checked {
       background-color: #d32f2f;
       color: #fff;
     }
-    .checklist-right li.checked::after {
+    .checklist-container li.checked::after {
       content: "✔";
       position: absolute;
       right: 10px;
@@ -315,6 +298,7 @@
       background-color: #d32f2f;
       color: #fff;
       transition: transform 0.3s ease;
+      font-family: 'Dancing Script', cursive;
     }
     .checklist-button:disabled {
       background-color: #ccc;
@@ -345,6 +329,29 @@
       height: auto;
       border-radius: 10px;
       margin-top: 20px;
+    }
+    /* ---------- Confetti Effect ---------- */
+    #confetti {
+      pointer-events: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 3;
+      overflow: hidden;
+    }
+    .confetti-piece {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background-color: red;
+      opacity: 0.7;
+      animation: confettiFall 3s linear infinite;
+    }
+    @keyframes confettiFall {
+      0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
     }
   </style>
 </head>
@@ -405,28 +412,19 @@
   <!-- Checklist Page -->
   <div id="checklist-page" class="checklist-page">
     <div class="checklist-container">
-      <!-- Left Column: Location & Map Info -->
-      <div class="checklist-left">
-        <h2>Details of our special date</h2>
-        <p>Location: Düsseldorf</p>
-        <!-- Replace with your own map image of Düsseldorf with a pin -->
-        <img src="https://via.placeholder.com/400x200.png?text=Düsseldorf+Map" alt="Düsseldorf Map" />
-        <p>With: Yours Truly, Philip</p>
-      </div>
-      <!-- Right Column: Clickable Checklist -->
-      <div class="checklist-right">
-        <h2>Checklist:</h2>
-        <ul>
-          <li onclick="toggleCheck(this)">Dress Cute</li>
-          <li onclick="toggleCheck(this)">Smile</li>
-          <li onclick="toggleCheck(this)">Bring your gorgeous self</li>
-          <li onclick="toggleCheck(this)">Be ready for surprises</li>
-          <li onclick="toggleCheck(this)">Let's have fun together</li>
-        </ul>
-      </div>
+      <h2>Details of our special date</h2>
+      <p>Location: Düsseldorf</p>
+      <img src="dusseldorf.jpg" alt="Düsseldorf Map" />
+      <p>With: Yours Truly, Philip</p>
+      <ul>
+        <li onclick="toggleCheck(this)">Dress Cute</li>
+        <li onclick="toggleCheck(this)">Smile</li>
+        <li onclick="toggleCheck(this)">Bring your gorgeous self</li>
+        <li onclick="toggleCheck(this)">Be ready for surprises</li>
+        <li onclick="toggleCheck(this)">Let's have fun together</li>
+      </ul>
+      <button id="checklist-button" class="checklist-button" onclick="redirectToFinalPage()" disabled>Complete Checklist to Proceed</button>
     </div>
-    <!-- Button to redirect to final page -->
-    <button id="checklist-button" class="checklist-button" onclick="redirectToFinalPage()" disabled>Complete Checklist to Proceed</button>
   </div>
   
   <!-- Final Page -->
@@ -558,7 +556,7 @@
     
     // ---------- Check if all checklist items are completed ----------
     function checkCompletion() {
-      const checklistItems = document.querySelectorAll('.checklist-right li');
+      const checklistItems = document.querySelectorAll('.checklist-container li');
       const checklistButton = document.getElementById('checklist-button');
       let allChecked = true;
       checklistItems.forEach(item => {
