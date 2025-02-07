@@ -52,6 +52,11 @@
       max-width: 80%;
       border-radius: 10px;
       cursor: pointer;
+      animation: jump 1.5s infinite ease-in-out;
+    }
+    @keyframes jump {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
     }
     .popup {
       margin-top: 20px;
@@ -95,7 +100,6 @@
     }
     .button-container {
       display: flex;
-      flex-wrap: wrap;
       justify-content: center;
       gap: 20px;
       margin-top: 20px;
@@ -107,7 +111,7 @@
       border-radius: 8px;
       cursor: pointer;
       color: #fff;
-      transition: transform 0.3s ease, font-size 0.3s ease, padding 0.3s ease;
+      transition: transform 0.3s ease;
     }
     .green {
       background-color: #4caf50;
@@ -214,81 +218,6 @@
       border-radius: 10px;
       margin-bottom: 20px;
     }
-    /* ---------- Checklist Page ---------- */
-    .checklist-page {
-      background-color: #fff;
-      background-image: radial-gradient(circle, #ff9ef0 1px, transparent 1px);
-      background-size: 20px 20px;
-      width: 100vw;
-      height: 100vh;
-      display: none;
-      padding: 20px;
-      transition: opacity 0.5s ease;
-    }
-    .checklist-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 40px;
-      justify-content: center;
-      align-items: flex-start;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-    .checklist-left, .checklist-right {
-      flex: 1 1 300px;
-      min-width: 300px;
-    }
-    /* Left column: Location & map info */
-    .checklist-left h2 {
-      font-size: 1.8rem;
-      margin-bottom: 10px;
-      font-weight: 400;
-    }
-    .checklist-left p {
-      font-size: 1.4rem;
-      margin-bottom: 20px;
-      font-weight: 300;
-    }
-    .checklist-left img {
-      max-width: 100%;
-      border-radius: 8px;
-      margin-bottom: 10px;
-    }
-    /* Right column: Checklist */
-    .checklist-right h2 {
-      font-size: 1.8rem;
-      margin-bottom: 10px;
-      font-weight: 400;
-    }
-    .checklist-right ul {
-      list-style: none;
-      padding: 0;
-    }
-    .checklist-right li {
-      font-size: 1.4rem;
-      margin: 10px 0;
-      padding: 10px 20px;
-      border: 2px solid #d32f2f;
-      border-radius: 8px;
-      cursor: pointer;
-      position: relative;
-      transition: background 0.3s;
-      /* White outline via text-shadow */
-      text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
-    }
-    .checklist-right li.checked {
-      background-color: #d32f2f;
-      color: #fff;
-    }
-    .checklist-right li.checked::after {
-      content: "✔";
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 1.4rem;
-      color: #fff;
-    }
     /* ---------- Confetti Effect ---------- */
     #confetti {
       pointer-events: none;
@@ -328,12 +257,8 @@
       <p>Are you ready?</p>
       <img src="photo.gif" alt="Our Photo" />
       <div class="button-container">
-        <!-- Two green buttons (extra input for "Yes") -->
         <button id="green-button" class="button green" onclick="handleGreenClick()">Yes!</button>
-        <button id="green-button2" class="button green" onclick="handleGreenClick()">Absolutely!</button>
-        <!-- Two red buttons (extra input for "No") -->
         <button id="red-button" class="button red" onclick="handleRedClick()">No, I'm not ready</button>
-        <button id="red-button2" class="button red" onclick="handleRedClick()">Not yet</button>
       </div>
     </div>
   </div>
@@ -365,37 +290,11 @@
       <img src="happy.gif" alt="Happy GIF" />
       <h1 id="valentine-text" style="font-weight:300;">Will you be my Valentine?</h1>
       <div class="button-container" style="justify-content: center; gap: 30px;">
-        <!-- Final green buttons require double confirmation -->
         <button id="happy-yes" class="button green" onclick="handleHappyYesClick()">Yes</button>
         <button id="happy-no" class="button green" onclick="handleHappyNoClick()">You can't say no!</button>
       </div>
     </div>
     <div id="confetti"></div>
-  </div>
-  
-  <!-- Checklist Page -->
-  <div id="checklist-page" class="checklist-page">
-    <div class="checklist-container">
-      <!-- Left Column: Location & Map Info -->
-      <div class="checklist-left">
-        <h2>Location:</h2>
-        <p>Düsseldorf</p>
-        <!-- Replace with your own map image of Düsseldorf with a pin -->
-        <img src="dusseldorf-map.jpg" alt="Düsseldorf Map" />
-        <p>With: Yours Truly, Philip</p>
-      </div>
-      <!-- Right Column: Clickable Checklist -->
-      <div class="checklist-right">
-        <h2>Checklist:</h2>
-        <ul>
-          <li onclick="toggleCheck(this)">Dress Cute</li>
-          <li onclick="toggleCheck(this)">Smile</li>
-          <li onclick="toggleCheck(this)">Bring your gorgeous self</li>
-          <li onclick="toggleCheck(this)">Be ready for surprises</li>
-          <li onclick="toggleCheck(this)">Let's have fun together</li>
-        </ul>
-      </div>
-    </div>
   </div>
   
   <script>
@@ -414,36 +313,28 @@
     let greenButtonPressCount = 0;
     function handleGreenClick() {
       greenButtonPressCount++;
-      const buttons = document.querySelectorAll('.button.green');
-      buttons.forEach(btn => {
-        btn.style.transform = `scale(${1 + 0.3 * greenButtonPressCount})`;
-        btn.style.fontSize = `${1.2 * (1 + 0.3 * greenButtonPressCount)}rem`;
-        btn.style.padding = `${15 * (1 + 0.3 * greenButtonPressCount)}px ${30 * (1 + 0.3 * greenButtonPressCount)}px`;
-      });
+      const greenButton = document.getElementById('green-button');
+      greenButton.style.transform = `scale(${1 + 0.2 * greenButtonPressCount})`;
+      greenButton.style.fontSize = `${1.2 * (1 + 0.2 * greenButtonPressCount)}rem`;
+      greenButton.style.padding = `${12 * (1 + 0.2 * greenButtonPressCount)}px ${28 * (1 + 0.2 * greenButtonPressCount)}px`;
       if (greenButtonPressCount === 1) {
-        document.getElementById('green-button').textContent = "Really? :)";
-        document.getElementById('green-button2').textContent = "Really? :)";
+        greenButton.textContent = "Really? :)";
       } else if (greenButtonPressCount === 2) {
-        document.getElementById('green-button').textContent = "OH MY GOD";
-        document.getElementById('green-button2').textContent = "OH MY GOD";
+        greenButton.textContent = "OH MY GOD";
         setTimeout(showHappyPage, 1000);
       }
     }
     
     function handleRedClick() {
       redButtonPressCount++;
-      const buttons = document.querySelectorAll('.button.red');
-      buttons.forEach(btn => {
-        btn.style.transform = `scale(${1 + 0.3 * redButtonPressCount})`;
-        btn.style.fontSize = `${1.2 * (1 + 0.3 * redButtonPressCount)}rem`;
-        btn.style.padding = `${15 * (1 + 0.3 * redButtonPressCount)}px ${30 * (1 + 0.3 * redButtonPressCount)}px`;
-      });
+      const redButton = document.getElementById('red-button');
+      redButton.style.transform = `scale(${1 + 0.2 * redButtonPressCount})`;
+      redButton.style.fontSize = `${1.2 * (1 + 0.2 * redButtonPressCount)}rem`;
+      redButton.style.padding = `${12 * (1 + 0.2 * redButtonPressCount)}px ${28 * (1 + 0.2 * redButtonPressCount)}px`;
       if (redButtonPressCount === 1) {
-        document.getElementById('red-button').textContent = "Are you sure?";
-        document.getElementById('red-button2').textContent = "Are you sure?";
+        redButton.textContent = "Are you sure?";
       } else if (redButtonPressCount === 2) {
-        document.getElementById('red-button').textContent = "I'll be sad";
-        document.getElementById('red-button2').textContent = "I'll be sad";
+        redButton.textContent = "I'll be sad";
       } else if (redButtonPressCount === 3) {
         document.getElementById('container').style.display = 'none';
         document.getElementById('sad-page').style.display = 'flex';
@@ -502,52 +393,27 @@
     function handleHappyYesClick() {
       happyYesFinalCount++;
       const btnYes = document.getElementById('happy-yes');
-      // Apply a scaling effect
-      btnYes.style.transform = `scale(${1 + 0.3 * happyYesFinalCount})`;
-      btnYes.style.fontSize = `${1.2 * (1 + 0.3 * happyYesFinalCount)}rem`;
-      btnYes.style.padding = `${15 * (1 + 0.3 * happyYesFinalCount)}px ${30 * (1 + 0.3 * happyYesFinalCount)}px`;
+      btnYes.style.transform = `scale(${1 + 0.2 * happyYesFinalCount})`;
+      btnYes.style.fontSize = `${1.2 * (1 + 0.2 * happyYesFinalCount)}rem`;
+      btnYes.style.padding = `${12 * (1 + 0.2 * happyYesFinalCount)}px ${28 * (1 + 0.2 * happyYesFinalCount)}px`;
       if (happyYesFinalCount === 1) {
         btnYes.textContent = "Really? :)";
       } else if (happyYesFinalCount === 2) {
         btnYes.textContent = "OH MY GOD";
-        setTimeout(showChecklistPage, 1000);
       }
     }
     function handleHappyNoClick() {
       happyNoFinalCount++;
       const btnNo = document.getElementById('happy-no');
-      btnNo.style.transform = `scale(${1 + 0.3 * happyNoFinalCount})`;
-      btnNo.style.fontSize = `${1.2 * (1 + 0.3 * happyNoFinalCount)}rem`;
-      btnNo.style.padding = `${15 * (1 + 0.3 * happyNoFinalCount)}px ${30 * (1 + 0.3 * happyNoFinalCount)}px`;
+      btnNo.style.transform = `scale(${1 + 0.2 * happyNoFinalCount})`;
+      btnNo.style.fontSize = `${1.2 * (1 + 0.2 * happyNoFinalCount)}rem`;
+      btnNo.style.padding = `${12 * (1 + 0.2 * happyNoFinalCount)}px ${28 * (1 + 0.2 * happyNoFinalCount)}px`;
       if (happyNoFinalCount === 1) {
         btnNo.textContent = "Really? :)";
       } else if (happyNoFinalCount === 2) {
         btnNo.textContent = "OH MY GOD";
-        setTimeout(showChecklistPage, 1000);
       }
-    }
-    
-    // ---------- Transition to Checklist Page with Smooth Fade ----------
-    function showChecklistPage() {
-      // Fade out the Happy Page and then show the Checklist Page
-      const happyPage = document.getElementById('happy-page');
-      happyPage.style.opacity = 0;
-      setTimeout(() => {
-        happyPage.style.display = 'none';
-        const checklistPage = document.getElementById('checklist-page');
-        checklistPage.style.display = 'flex';
-        checklistPage.style.opacity = 0;
-        setTimeout(() => {
-          checklistPage.style.opacity = 1;
-        }, 100);
-      }, 500);
-    }
-    
-    // ---------- Checklist Toggle Function ----------
-    function toggleCheck(element) {
-      element.classList.toggle("checked");
     }
   </script>
 </body>
 </html>
-
