@@ -19,7 +19,7 @@
       font-family: 'Poppins', sans-serif;
       overflow-x: hidden;
     }
-    /* Container (applied to the first two pages) */
+    /* Container for Beginning and First Pages */
     #container {
       width: 100%;
       max-width: 1100px;
@@ -33,7 +33,7 @@
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       overflow: hidden;
       position: relative;
-      transition: all 0.5s ease;
+      transition: opacity 0.5s ease;
     }
     /* ---------- Beginning Page ---------- */
     #beginning-page {
@@ -52,7 +52,6 @@
       max-width: 80%;
       border-radius: 10px;
       cursor: pointer;
-      /* No extra border/shadow */
     }
     .popup {
       margin-top: 20px;
@@ -76,6 +75,7 @@
       text-align: center;
       padding: 20px;
       color: #d32f2f;
+      transition: opacity 0.5s ease;
     }
     #first-page h1 {
       font-size: 2.8rem;
@@ -92,7 +92,6 @@
       height: auto;
       border-radius: 10px;
       margin-top: 20px;
-      /* Restored: no extra border/shadow */
     }
     .button-container {
       display: flex;
@@ -134,6 +133,7 @@
       justify-content: center;
       align-items: center;
       overflow: hidden;
+      transition: opacity 0.5s ease;
     }
     .sad-content {
       position: relative;
@@ -144,7 +144,6 @@
     .sad-content img {
       width: 300px;
       margin-bottom: 20px;
-      /* No extra shadow */
     }
     .sad-content h1 {
       font-size: 2.5rem;
@@ -186,6 +185,7 @@
       align-items: center;
       text-align: center;
       color: #d32f2f;
+      transition: opacity 0.5s ease;
     }
     .countdown {
       font-size: 4rem;
@@ -195,7 +195,6 @@
     .fade-out {
       opacity: 0 !important;
     }
-    /* Final content with animated Valentine question */
     .final-content {
       display: none;
       flex-direction: column;
@@ -214,7 +213,6 @@
       height: auto;
       border-radius: 10px;
       margin-bottom: 20px;
-      /* No extra shadow */
     }
     /* ---------- Checklist Page ---------- */
     .checklist-page {
@@ -224,23 +222,49 @@
       width: 100vw;
       height: 100vh;
       display: none;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
       padding: 20px;
-      color: #d32f2f;
+      transition: opacity 0.5s ease;
     }
-    .checklist-page h1 {
-      font-size: 2.8rem;
+    .checklist-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      justify-content: center;
+      align-items: flex-start;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .checklist-left, .checklist-right {
+      flex: 1 1 300px;
+      min-width: 300px;
+    }
+    /* Left column: Location & map info */
+    .checklist-left h2 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      font-weight: 400;
+    }
+    .checklist-left p {
+      font-size: 1.4rem;
       margin-bottom: 20px;
-      font-weight: 600;
+      font-weight: 300;
     }
-    .checklist-page ul {
+    .checklist-left img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    /* Right column: Checklist */
+    .checklist-right h2 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      font-weight: 400;
+    }
+    .checklist-right ul {
       list-style: none;
       padding: 0;
-      width: 80%;
     }
-    .checklist-page li {
+    .checklist-right li {
       font-size: 1.4rem;
       margin: 10px 0;
       padding: 10px 20px;
@@ -249,14 +273,14 @@
       cursor: pointer;
       position: relative;
       transition: background 0.3s;
-      /* White text outline using text-shadow for subtle border effect */
+      /* White outline via text-shadow */
       text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
     }
-    .checklist-page li.checked {
+    .checklist-right li.checked {
       background-color: #d32f2f;
       color: #fff;
     }
-    .checklist-page li.checked::after {
+    .checklist-right li.checked::after {
       content: "✔";
       position: absolute;
       right: 10px;
@@ -339,9 +363,9 @@
     <div class="countdown" id="countdown">3...</div>
     <div class="final-content" id="final-content">
       <img src="happy.gif" alt="Happy GIF" />
-      <h1 id="valentine-text">Will you be my Valentine?</h1>
-      <div class="button-container">
-        <!-- Final green buttons trigger transition to Checklist Page -->
+      <h1 id="valentine-text" style="font-weight:300;">Will you be my Valentine?</h1>
+      <div class="button-container" style="justify-content: center; gap: 30px;">
+        <!-- Final green buttons require double confirmation -->
         <button id="happy-yes" class="button green" onclick="handleHappyYesClick()">Yes</button>
         <button id="happy-no" class="button green" onclick="handleHappyNoClick()">You can't say no!</button>
       </div>
@@ -349,16 +373,29 @@
     <div id="confetti"></div>
   </div>
   
-  <!-- Checklist Page (appears after she agrees) -->
+  <!-- Checklist Page -->
   <div id="checklist-page" class="checklist-page">
-    <h1>Valentine's Day Checklist</h1>
-    <ul>
-      <li onclick="toggleCheck(this)">Dress Cute</li>
-      <li onclick="toggleCheck(this)">Smile</li>
-      <li onclick="toggleCheck(this)">Bring your gorgeous self</li>
-      <li onclick="toggleCheck(this)">Be ready for surprises</li>
-      <li onclick="toggleCheck(this)">Let's have fun together</li>
-    </ul>
+    <div class="checklist-container">
+      <!-- Left Column: Location & Map Info -->
+      <div class="checklist-left">
+        <h2>Location:</h2>
+        <p>Düsseldorf</p>
+        <!-- Replace with your own map image of Düsseldorf with a pin -->
+        <img src="dusseldorf-map.jpg" alt="Düsseldorf Map" />
+        <p>With: Yours Truly, Philip</p>
+      </div>
+      <!-- Right Column: Clickable Checklist -->
+      <div class="checklist-right">
+        <h2>Checklist:</h2>
+        <ul>
+          <li onclick="toggleCheck(this)">Dress Cute</li>
+          <li onclick="toggleCheck(this)">Smile</li>
+          <li onclick="toggleCheck(this)">Bring your gorgeous self</li>
+          <li onclick="toggleCheck(this)">Be ready for surprises</li>
+          <li onclick="toggleCheck(this)">Let's have fun together</li>
+        </ul>
+      </div>
+    </div>
   </div>
   
   <script>
@@ -377,7 +414,6 @@
     let greenButtonPressCount = 0;
     function handleGreenClick() {
       greenButtonPressCount++;
-      // Scale effect on click (applies to all green buttons via same function)
       const buttons = document.querySelectorAll('.button.green');
       buttons.forEach(btn => {
         btn.style.transform = `scale(${1 + 0.3 * greenButtonPressCount})`;
@@ -385,11 +421,9 @@
         btn.style.padding = `${15 * (1 + 0.3 * greenButtonPressCount)}px ${30 * (1 + 0.3 * greenButtonPressCount)}px`;
       });
       if (greenButtonPressCount === 1) {
-        // Change text for first click
         document.getElementById('green-button').textContent = "Really? :)";
         document.getElementById('green-button2').textContent = "Really? :)";
       } else if (greenButtonPressCount === 2) {
-        // Second click, change text and then transition
         document.getElementById('green-button').textContent = "OH MY GOD";
         document.getElementById('green-button2').textContent = "OH MY GOD";
         setTimeout(showHappyPage, 1000);
@@ -462,19 +496,51 @@
       }
     }
     
-    // ---------- Happy Page Buttons (Transition to Checklist Page) ----------
+    // ---------- Happy Page Final Buttons Double Confirmation ----------
+    let happyYesFinalCount = 0;
+    let happyNoFinalCount = 0;
     function handleHappyYesClick() {
-      // You may add scaling effect if desired; then transition to checklist page
-      showChecklistPage();
+      happyYesFinalCount++;
+      const btnYes = document.getElementById('happy-yes');
+      // Apply a scaling effect
+      btnYes.style.transform = `scale(${1 + 0.3 * happyYesFinalCount})`;
+      btnYes.style.fontSize = `${1.2 * (1 + 0.3 * happyYesFinalCount)}rem`;
+      btnYes.style.padding = `${15 * (1 + 0.3 * happyYesFinalCount)}px ${30 * (1 + 0.3 * happyYesFinalCount)}px`;
+      if (happyYesFinalCount === 1) {
+        btnYes.textContent = "Really? :)";
+      } else if (happyYesFinalCount === 2) {
+        btnYes.textContent = "OH MY GOD";
+        setTimeout(showChecklistPage, 1000);
+      }
     }
     function handleHappyNoClick() {
-      // Also transition to checklist page
-      showChecklistPage();
+      happyNoFinalCount++;
+      const btnNo = document.getElementById('happy-no');
+      btnNo.style.transform = `scale(${1 + 0.3 * happyNoFinalCount})`;
+      btnNo.style.fontSize = `${1.2 * (1 + 0.3 * happyNoFinalCount)}rem`;
+      btnNo.style.padding = `${15 * (1 + 0.3 * happyNoFinalCount)}px ${30 * (1 + 0.3 * happyNoFinalCount)}px`;
+      if (happyNoFinalCount === 1) {
+        btnNo.textContent = "Really? :)";
+      } else if (happyNoFinalCount === 2) {
+        btnNo.textContent = "OH MY GOD";
+        setTimeout(showChecklistPage, 1000);
+      }
     }
     
+    // ---------- Transition to Checklist Page with Smooth Fade ----------
     function showChecklistPage() {
-      document.getElementById('happy-page').style.display = 'none';
-      document.getElementById('checklist-page').style.display = 'flex';
+      // Fade out the Happy Page and then show the Checklist Page
+      const happyPage = document.getElementById('happy-page');
+      happyPage.style.opacity = 0;
+      setTimeout(() => {
+        happyPage.style.display = 'none';
+        const checklistPage = document.getElementById('checklist-page');
+        checklistPage.style.display = 'flex';
+        checklistPage.style.opacity = 0;
+        setTimeout(() => {
+          checklistPage.style.opacity = 1;
+        }, 100);
+      }, 500);
     }
     
     // ---------- Checklist Toggle Function ----------
@@ -484,4 +550,3 @@
   </script>
 </body>
 </html>
-
