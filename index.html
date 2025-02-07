@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Will You Be My Valentine?</title>
+  <!-- Load a cuter Google font -->
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
   <style>
     /* Global Reset and Remove Horizontal Scrollbar */
     html, body {
@@ -11,11 +13,11 @@
       padding: 0;
       height: 100%;
       width: 100%;
-      background-color: #ffffff;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-color: #fff;
+      font-family: 'Caveat', cursive, sans-serif;
       overflow-x: hidden;
     }
-    /* Updated Container: Larger (max-width increased to 1100px and height to 90vh) */
+    /* Updated Container: Larger, with a cute pastel gradient, soft drop shadow, and decorative hearts */
     #container {
       width: 100%;
       max-width: 1100px;
@@ -23,10 +25,21 @@
       margin: 20px auto;
       border: 5px solid #d32f2f;
       border-radius: 20px;
-      background-color: white;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
       overflow: hidden;
       position: relative;
       transition: all 0.5s ease;
+    }
+    /* Decorative hearts at the bottom of the container */
+    #container::after {
+      content: "💖💖💖";
+      font-size: 2rem;
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0.7;
     }
     /* ---------- Beginning Page ---------- */
     #beginning-page {
@@ -45,6 +58,7 @@
       max-width: 80%;
       border-radius: 10px;
       cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
     .popup {
       margin-top: 20px;
@@ -82,6 +96,7 @@
       height: auto;
       border-radius: 10px;
       margin-top: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
     .button-container {
       display: flex;
@@ -93,10 +108,11 @@
       padding: 15px 30px;
       font-size: 1.2rem;
       border: none;
-      border-radius: 5px;
+      border-radius: 10px;
       cursor: pointer;
-      color: white;
+      color: #fff;
       transition: transform 0.3s ease, font-size 0.3s ease, padding 0.3s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
     .green {
       background-color: #4caf50;
@@ -127,11 +143,12 @@
       position: relative;
       z-index: 2;
       text-align: center;
-      color: white;
+      color: #fff;
     }
     .sad-content img {
       width: 300px; /* Larger sad gif */
       margin-bottom: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
     .sad-content h1 {
       font-size: 2.5rem;
@@ -201,6 +218,7 @@
       height: auto;
       border-radius: 10px;
       margin-bottom: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
     /* ---------- Confetti Effect ---------- */
     #confetti {
@@ -345,9 +363,9 @@
           document.getElementById('final-content').style.display = 'flex';
           launchConfetti();
         } else {
-          // Display the number for 1 second
+          // Display current count with ellipsis
           countdownElem.textContent = count + "...";
-          // After 1 second, start fade-out over 0.8 seconds then show the next number
+          // Fade out then show the next number
           setTimeout(() => {
             countdownElem.classList.add("fade-out");
             setTimeout(() => {
