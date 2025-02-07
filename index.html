@@ -218,6 +218,81 @@
       border-radius: 10px;
       margin-bottom: 20px;
     }
+    /* ---------- Checklist Page ---------- */
+    .checklist-page {
+      background-color: #fff;
+      background-image: radial-gradient(circle, #ff9ef0 1px, transparent 1px);
+      background-size: 20px 20px;
+      width: 100vw;
+      height: 100vh;
+      display: none;
+      padding: 20px;
+      transition: opacity 0.5s ease;
+    }
+    .checklist-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      justify-content: center;
+      align-items: flex-start;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .checklist-left, .checklist-right {
+      flex: 1 1 300px;
+      min-width: 300px;
+    }
+    /* Left column: Location & map info */
+    .checklist-left h2 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      font-weight: 400;
+    }
+    .checklist-left p {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+      font-weight: 300;
+    }
+    .checklist-left img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    /* Right column: Checklist */
+    .checklist-right h2 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      font-weight: 400;
+    }
+    .checklist-right ul {
+      list-style: none;
+      padding: 0;
+    }
+    .checklist-right li {
+      font-size: 1.4rem;
+      margin: 10px 0;
+      padding: 10px 20px;
+      border: 2px solid #d32f2f;
+      border-radius: 8px;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.3s;
+      /* White outline via text-shadow */
+      text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+    }
+    .checklist-right li.checked {
+      background-color: #d32f2f;
+      color: #fff;
+    }
+    .checklist-right li.checked::after {
+      content: "✔";
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.4rem;
+      color: #fff;
+    }
     /* ---------- Confetti Effect ---------- */
     #confetti {
       pointer-events: none;
@@ -295,6 +370,31 @@
       </div>
     </div>
     <div id="confetti"></div>
+  </div>
+  
+  <!-- Checklist Page -->
+  <div id="checklist-page" class="checklist-page">
+    <div class="checklist-container">
+      <!-- Left Column: Location & Map Info -->
+      <div class="checklist-left">
+        <h2>Location:</h2>
+        <p>Düsseldorf</p>
+        <!-- Replace with your own map image of Düsseldorf with a pin -->
+        <img src="dusseldorf-map.jpg" alt="Düsseldorf Map" />
+        <p>With: Yours Truly, Philip</p>
+      </div>
+      <!-- Right Column: Clickable Checklist -->
+      <div class="checklist-right">
+        <h2>Checklist:</h2>
+        <ul>
+          <li onclick="toggleCheck(this)">Dress Cute</li>
+          <li onclick="toggleCheck(this)">Smile</li>
+          <li onclick="toggleCheck(this)">Bring your gorgeous self</li>
+          <li onclick="toggleCheck(this)">Be ready for surprises</li>
+          <li onclick="toggleCheck(this)">Let's have fun together</li>
+        </ul>
+      </div>
+    </div>
   </div>
   
   <script>
@@ -387,32 +487,19 @@
       }
     }
     
-    // ---------- Happy Page Final Buttons Double Confirmation ----------
-    let happyYesFinalCount = 0;
-    let happyNoFinalCount = 0;
+    // ---------- Happy Page Final Buttons ----------
     function handleHappyYesClick() {
-      happyYesFinalCount++;
-      const btnYes = document.getElementById('happy-yes');
-      btnYes.style.transform = `scale(${1 + 0.2 * happyYesFinalCount})`;
-      btnYes.style.fontSize = `${1.2 * (1 + 0.2 * happyYesFinalCount)}rem`;
-      btnYes.style.padding = `${12 * (1 + 0.2 * happyYesFinalCount)}px ${28 * (1 + 0.2 * happyYesFinalCount)}px`;
-      if (happyYesFinalCount === 1) {
-        btnYes.textContent = "Really? :)";
-      } else if (happyYesFinalCount === 2) {
-        btnYes.textContent = "OH MY GOD";
-      }
+      document.getElementById('happy-page').style.display = 'none';
+      document.getElementById('checklist-page').style.display = 'flex';
     }
     function handleHappyNoClick() {
-      happyNoFinalCount++;
-      const btnNo = document.getElementById('happy-no');
-      btnNo.style.transform = `scale(${1 + 0.2 * happyNoFinalCount})`;
-      btnNo.style.fontSize = `${1.2 * (1 + 0.2 * happyNoFinalCount)}rem`;
-      btnNo.style.padding = `${12 * (1 + 0.2 * happyNoFinalCount)}px ${28 * (1 + 0.2 * happyNoFinalCount)}px`;
-      if (happyNoFinalCount === 1) {
-        btnNo.textContent = "Really? :)";
-      } else if (happyNoFinalCount === 2) {
-        btnNo.textContent = "OH MY GOD";
-      }
+      document.getElementById('happy-page').style.display = 'none';
+      document.getElementById('checklist-page').style.display = 'flex';
+    }
+    
+    // ---------- Checklist Toggle Function ----------
+    function toggleCheck(element) {
+      element.classList.toggle("checked");
     }
   </script>
 </body>
