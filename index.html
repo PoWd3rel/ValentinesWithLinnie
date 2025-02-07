@@ -4,42 +4,32 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Will You Be My Valentine?</title>
-  <!-- Load a cuter Google font -->
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Use a clean, modern Google font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
-    /* Global Reset and Remove Horizontal Scrollbar */
+    /* Global reset and clean background */
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
       width: 100%;
-      background-color: #fff;
-      font-family: 'Caveat', cursive, sans-serif;
+      background-color: #fafafa;
+      font-family: 'Poppins', sans-serif;
       overflow-x: hidden;
     }
-    /* Updated Container: Larger, with a cute pastel gradient, soft drop shadow, and decorative hearts */
+    /* Clean container with white background and subtle red border */
     #container {
       width: 100%;
       max-width: 1100px;
       height: 90vh;
       margin: 20px auto;
-      border: 5px solid #d32f2f;
+      border: 4px solid #d32f2f;
       border-radius: 20px;
-      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      background-color: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       overflow: hidden;
       position: relative;
       transition: all 0.5s ease;
-    }
-    /* Decorative hearts at the bottom of the container */
-    #container::after {
-      content: "💖💖💖";
-      font-size: 2rem;
-      position: absolute;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      opacity: 0.7;
     }
     /* ---------- Beginning Page ---------- */
     #beginning-page {
@@ -58,19 +48,20 @@
       max-width: 80%;
       border-radius: 10px;
       cursor: pointer;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      /* A subtle drop shadow for a clean look */
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
     .popup {
       margin-top: 20px;
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       color: #d32f2f;
       animation: pop 1s infinite alternate;
     }
     @keyframes pop {
       from { transform: scale(1); }
-      to { transform: scale(1.1); }
+      to { transform: scale(1.05); }
     }
-    /* ---------- First Page (inside container) ---------- */
+    /* ---------- First Page ---------- */
     #first-page {
       background-color: #ff9ef0;
       width: 100%;
@@ -84,19 +75,21 @@
       color: #d32f2f;
     }
     #first-page h1 {
-      font-size: 3rem;
+      font-size: 2.8rem;
       margin-bottom: 20px;
+      font-weight: 600;
     }
     #first-page p {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       margin-bottom: 30px;
+      font-weight: 300;
     }
     #first-page img {
       max-width: 90%;
       height: auto;
       border-radius: 10px;
       margin-top: 20px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
     .button-container {
       display: flex;
@@ -105,26 +98,26 @@
       margin-top: 20px;
     }
     .button {
-      padding: 15px 30px;
+      padding: 12px 28px;
       font-size: 1.2rem;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       cursor: pointer;
       color: #fff;
       transition: transform 0.3s ease, font-size 0.3s ease, padding 0.3s ease;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
     .green {
       background-color: #4caf50;
     }
     .green:hover {
-      background-color: #388e3c;
+      background-color: #43a047;
     }
     .red {
       background-color: #f44336;
     }
     .red:hover {
-      background-color: #d32f2f;
+      background-color: #e53935;
     }
     /* ---------- Sad Page ---------- */
     .sad-page {
@@ -146,15 +139,15 @@
       color: #fff;
     }
     .sad-content img {
-      width: 300px; /* Larger sad gif */
+      width: 300px;
       margin-bottom: 20px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
     .sad-content h1 {
       font-size: 2.5rem;
       margin-bottom: 10px;
+      font-weight: 400;
     }
-    /* CSS Rain Effect (falling raindrops) */
     .rain {
       position: absolute;
       top: 0;
@@ -199,7 +192,6 @@
     .fade-out {
       opacity: 0 !important;
     }
-    /* Final content with animated Valentine question */
     .final-content {
       display: none;
       flex-direction: column;
@@ -214,13 +206,12 @@
     }
     .final-content img {
       max-width: 90%;
-      width: 300px; /* Larger happy gif */
+      width: 300px;
       height: auto;
       border-radius: 10px;
       margin-bottom: 20px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
-    /* ---------- Confetti Effect ---------- */
     #confetti {
       pointer-events: none;
       position: absolute;
@@ -264,7 +255,7 @@
       </div>
     </div>
   </div>
-
+  
   <!-- Sad Page -->
   <div id="sad-page" class="sad-page">
     <div class="rain">
@@ -284,7 +275,7 @@
       <h1>Okay...</h1>
     </div>
   </div>
-
+  
   <!-- Happy Page -->
   <div id="happy-page" class="happy-page">
     <div class="countdown" id="countdown">3...</div>
@@ -298,9 +289,9 @@
     </div>
     <div id="confetti"></div>
   </div>
-
+  
   <script>
-    /* --- Beginning Page Transition --- */
+    // Beginning Page Transition
     function openLetter() {
       const beginningPage = document.getElementById('beginning-page');
       beginningPage.style.opacity = 0;
@@ -309,13 +300,13 @@
         document.getElementById('first-page').style.display = 'flex';
       }, 500);
     }
-
-    /* --- First Page Buttons --- */
+    
+    // First Page Buttons
     let redButtonPressCount = 0;
     let greenButtonPressCount = 0;
     const greenButton = document.getElementById('green-button');
     const redButton = document.getElementById('red-button');
-
+    
     function handleGreenClick() {
       greenButtonPressCount++;
       const scaleFactor = 1 + 0.3 * greenButtonPressCount;
@@ -329,7 +320,7 @@
         setTimeout(showHappyPage, 1000);
       }
     }
-
+    
     function handleRedClick() {
       redButtonPressCount++;
       const scaleFactor = 1 + 0.3 * redButtonPressCount;
@@ -345,15 +336,15 @@
         document.getElementById('sad-page').style.display = 'flex';
       }
     }
-
-    /* --- Transition to Happy Page --- */
+    
+    // Transition to Happy Page
     function showHappyPage() {
       document.getElementById('container').style.display = 'none';
       document.getElementById('happy-page').style.display = 'flex';
       startCountdown();
     }
-
-    /* --- Revised Countdown for Happy Page --- */
+    
+    // Revised Countdown for Happy Page
     function startCountdown() {
       const countdownElem = document.getElementById('countdown');
       let count = 3;
@@ -363,9 +354,7 @@
           document.getElementById('final-content').style.display = 'flex';
           launchConfetti();
         } else {
-          // Display current count with ellipsis
           countdownElem.textContent = count + "...";
-          // Fade out then show the next number
           setTimeout(() => {
             countdownElem.classList.add("fade-out");
             setTimeout(() => {
@@ -378,8 +367,8 @@
       }
       showNext();
     }
-
-    /* --- Confetti Effect --- */
+    
+    // Confetti Effect
     function launchConfetti() {
       const confettiContainer = document.getElementById('confetti');
       confettiContainer.innerHTML = '';
@@ -393,13 +382,13 @@
         confettiContainer.appendChild(confetti);
       }
     }
-
-    /* --- Happy Page Buttons --- */
+    
+    // Happy Page Buttons
     let happyYesCount = 0;
     let happyNoCount = 0;
     const happyYes = document.getElementById('happy-yes');
     const happyNo = document.getElementById('happy-no');
-
+    
     function handleHappyYesClick() {
       happyYesCount++;
       const scaleFactor = 1 + 0.3 * happyYesCount;
@@ -408,7 +397,7 @@
       happyYes.style.padding = `${15 * scaleFactor}px ${30 * scaleFactor}px`;
       alert("You made me the happiest!");
     }
-
+    
     function handleHappyNoClick() {
       happyNoCount++;
       const scaleFactor = 1 + 0.3 * happyNoCount;
@@ -420,4 +409,3 @@
   </script>
 </body>
 </html>
-
