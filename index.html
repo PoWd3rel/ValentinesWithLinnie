@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Will You Be My Valentine?</title>
   <style>
-    /* Global Reset */
+    /* Global Reset and Remove Horizontal Scrollbar */
     html, body {
       margin: 0;
       padding: 0;
@@ -13,12 +13,13 @@
       width: 100%;
       background-color: #ffffff;
       font-family: 'Comic Sans MS', cursive, sans-serif;
+      overflow-x: hidden;  /* Prevent horizontal scrollbar */
     }
-    /* Updated Container: Wider and slightly shorter */
+    /* Updated Container: Larger (max-width increased to 1100px and height to 90vh) */
     #container {
       width: 100%;
-      max-width: 900px;  /* Increased max-width */
-      height: 80vh;      /* Slightly shorter height */
+      max-width: 1100px;  /* Increased max-width */
+      height: 90vh;       /* Increased height */
       margin: 20px auto;
       border: 5px solid #d32f2f;
       border-radius: 20px;
@@ -396,3 +397,4 @@
   </script>
 </body>
 </html>
+
