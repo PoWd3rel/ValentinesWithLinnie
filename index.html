@@ -1,44 +1,566 @@
-<script>
-  // Revised Countdown for Happy Page
-  function startCountdown() {
-    const countdownElem = document.getElementById("countdown");
-    let count = 3;
-    const interval = setInterval(() => {
-      if (count <= 0) {
-        clearInterval(interval);
-        countdownElem.style.display = "none";
-        document.getElementById("final-content").style.display = "flex";
-        launchConfetti();
-      } else {
-        countdownElem.textContent = count + "...";
-        countdownElem.classList.add("fade-out");
-        setTimeout(() => countdownElem.classList.remove("fade-out"), 800);
-        count--;
-      }
-    }, 1000);
-  }
-
-  // Confetti Animation
-  function launchConfetti() {
-    const confettiContainer = document.getElementById("confetti");
-    for (let i = 0; i < 200; i++) {
-      const confettiPiece = document.createElement("div");
-      confettiPiece.className = "confetti-piece";
-      confettiPiece.style.left = `${Math.random() * 100}vw`;
-      confettiPiece.style.animationDelay = `${Math.random() * 2}s`;
-      confettiPiece.style.backgroundColor = getRandomColor();
-      confettiContainer.appendChild(confettiPiece);
-      setTimeout(() => confettiPiece.remove(), 3000);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Will You Be My Valentine?</title>
+  <!-- Use a clean, modern Google font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Global Reset & Background with Subtle Dot Pattern */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      background-color: #fff;
+      background-image: radial-gradient(circle, #ff9ef0 1px, transparent 1px);
+      background-size: 20px 20px;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
     }
-  }
-
-  function getRandomColor() {
-    const colors = ["#f44336", "#ff9800", "#ffc107", "#4caf50", "#03a9f4", "#9c27b0"];
-    return colors[Math.floor(Math.random() * colors.length)];
-  }
-
-  // Checklist Toggle
-  function toggleCheck(element) {
-    element.classList.toggle("checked");
-  }
-</script>
+    /* Container for Beginning and First Pages */
+    #container {
+      width: 100%;
+      max-width: 1100px;
+      height: 90vh;
+      margin: 20px auto;
+      border: 4px solid #d32f2f;
+      border-radius: 20px;
+      background-color: #fff;
+      background-image: radial-gradient(circle, #ff9ef0 1px, transparent 1px);
+      background-size: 20px 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      position: relative;
+      transition: opacity 0.5s ease;
+    }
+    /* ---------- Beginning Page ---------- */
+    #beginning-page {
+      background-color: #ff9ef0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      transition: opacity 0.5s ease;
+    }
+    #beginning-page img {
+      max-width: 80%;
+      border-radius: 10px;
+      cursor: pointer;
+      animation: jump 1.5s infinite ease-in-out;
+    }
+    @keyframes jump {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .popup {
+      margin-top: 20px;
+      font-size: 1.4rem;
+      color: #d32f2f;
+      animation: pop 1s infinite alternate;
+    }
+    @keyframes pop {
+      from { transform: scale(1); }
+      to { transform: scale(1.05); }
+    }
+    /* ---------- First Page ---------- */
+    #first-page {
+      background-color: #ff9ef0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      color: #d32f2f;
+      transition: opacity 0.5s ease;
+    }
+    #first-page h1 {
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    #first-page p {
+      font-size: 1.4rem;
+      margin-bottom: 30px;
+      font-weight: 300;
+    }
+    #first-page img {
+      max-width: 90%;
+      height: auto;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+    .button-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .button {
+      padding: 12px 28px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #fff;
+      transition: transform 0.3s ease;
+    }
+    .green {
+      background-color: #4caf50;
+    }
+    .green:hover {
+      background-color: #43a047;
+    }
+    .red {
+      background-color: #f44336;
+    }
+    .red:hover {
+      background-color: #e53935;
+    }
+    /* ---------- Sad Page ---------- */
+    .sad-page {
+      background-color: #2c3e50;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      transition: opacity 0.5s ease;
+    }
+    .sad-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: #fff;
+    }
+    .sad-content img {
+      width: 300px;
+      margin-bottom: 20px;
+    }
+    .sad-content h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      font-weight: 400;
+    }
+    .rain {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .drop {
+      position: absolute;
+      width: 2px;
+      height: 15px;
+      background: rgba(255,255,255,0.7);
+      animation: drop 0.8s linear infinite;
+    }
+    @keyframes drop {
+      0% { transform: translateY(-20px); opacity: 1; }
+      100% { transform: translateY(100vh); opacity: 0; }
+    }
+    /* ---------- Happy Page ---------- */
+    .happy-page {
+      background-color: #ff9ef0;
+      width: 100vw;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: #d32f2f;
+      transition: opacity 0.5s ease;
+    }
+    .countdown {
+      font-size: 4rem;
+      opacity: 1;
+      transition: opacity 0.8s ease-in-out;
+    }
+    .fade-out {
+      opacity: 0 !important;
+    }
+    .final-content {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0;
+      transform: scale(0.8);
+      animation: fadeInScale 1s forwards;
+    }
+    @keyframes fadeInScale {
+      0% { opacity: 0; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    .final-content img {
+      max-width: 90%;
+      width: 300px;
+      height: auto;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    /* ---------- Checklist Page ---------- */
+    .checklist-page {
+      background-color: #fff;
+      background-image: radial-gradient(circle, #ff9ef0 1px, transparent 1px);
+      background-size: 20px 20px;
+      width: 100vw;
+      height: 100vh;
+      display: none;
+      padding: 20px;
+      transition: opacity 0.5s ease;
+    }
+    .checklist-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      justify-content: center;
+      align-items: flex-start;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .checklist-left, .checklist-right {
+      flex: 1 1 300px;
+      min-width: 300px;
+    }
+    /* Thin red line to split the page */
+    .checklist-left {
+      border-right: 2px solid #d32f2f;
+      padding-right: 20px;
+    }
+    /* Left column: Location & map info */
+    .checklist-left h2 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      font-weight: 400;
+    }
+    .checklist-left p {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+      font-weight: 300;
+    }
+    .checklist-left img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    /* Right column: Checklist */
+    .checklist-right h2 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      font-weight: 400;
+    }
+    .checklist-right ul {
+      list-style: none;
+      padding: 0;
+    }
+    .checklist-right li {
+      font-size: 1.4rem;
+      margin: 10px 0;
+      padding: 10px 20px;
+      border: 2px solid #d32f2f;
+      border-radius: 8px;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.3s;
+      /* White outline via text-shadow */
+      text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+    }
+    .checklist-right li.checked {
+      background-color: #d32f2f;
+      color: #fff;
+    }
+    .checklist-right li.checked::after {
+      content: "✔";
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.4rem;
+      color: #fff;
+    }
+    /* Button to redirect to final page */
+    .checklist-button {
+      margin-top: 20px;
+      padding: 12px 28px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background-color: #d32f2f;
+      color: #fff;
+      transition: transform 0.3s ease;
+    }
+    .checklist-button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+    .checklist-button:hover:not(:disabled) {
+      transform: scale(1.05);
+    }
+    /* ---------- Final Page ---------- */
+    .final-page {
+      background-color: #ff9ef0;
+      width: 100vw;
+      height: 100vh;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: #d32f2f;
+      transition: opacity 0.5s ease;
+    }
+    .final-page h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+    .final-page img {
+      max-width: 90%;
+      height: auto;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Container for Beginning and First Pages -->
+  <div id="container">
+    <!-- Beginning Page -->
+    <div id="beginning-page">
+      <img src="loveletter.jpg" alt="Love Letter" onclick="openLetter()" />
+      <div class="popup">Click on the letter :3</div>
+    </div>
+    <!-- First Page -->
+    <div id="first-page">
+      <h1>Hey Linnie, sorry for the wait.</h1>
+      <p>Are you ready?</p>
+      <img src="photo.gif" alt="Our Photo" />
+      <div class="button-container">
+        <button id="green-button" class="button green" onclick="handleGreenClick()">Yes!</button>
+        <button id="red-button" class="button red" onclick="handleRedClick()">No, I'm not ready</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Sad Page -->
+  <div id="sad-page" class="sad-page">
+    <div class="rain">
+      <div class="drop" style="left: 10%; animation-delay: 0s;"></div>
+      <div class="drop" style="left: 20%; animation-delay: 0.2s;"></div>
+      <div class="drop" style="left: 30%; animation-delay: 0.4s;"></div>
+      <div class="drop" style="left: 40%; animation-delay: 0.6s;"></div>
+      <div class="drop" style="left: 50%; animation-delay: 0.8s;"></div>
+      <div class="drop" style="left: 60%; animation-delay: 1s;"></div>
+      <div class="drop" style="left: 70%; animation-delay: 1.2s;"></div>
+      <div class="drop" style="left: 80%; animation-delay: 1.4s;"></div>
+      <div class="drop" style="left: 90%; animation-delay: 1.6s;"></div>
+      <div class="drop" style="left: 95%; animation-delay: 1.8s;"></div>
+    </div>
+    <div class="sad-content">
+      <img src="sad-emoji.gif" alt="Sad Emoji" />
+      <h1>Okay...</h1>
+    </div>
+  </div>
+  
+  <!-- Happy Page -->
+  <div id="happy-page" class="happy-page">
+    <div class="countdown" id="countdown">3...</div>
+    <div class="final-content" id="final-content">
+      <img src="happy.gif" alt="Happy GIF" />
+      <h1 id="valentine-text" style="font-weight:300;">Will you be my Valentine?</h1>
+      <div class="button-container" style="justify-content: center; gap: 30px;">
+        <button id="happy-yes" class="button green" onclick="handleHappyYesClick()">Yes</button>
+        <button id="happy-no" class="button green" onclick="handleHappyNoClick()">You can't say no!</button>
+      </div>
+    </div>
+    <div id="confetti"></div>
+  </div>
+  
+  <!-- Checklist Page -->
+  <div id="checklist-page" class="checklist-page">
+    <div class="checklist-container">
+      <!-- Left Column: Location & Map Info -->
+      <div class="checklist-left">
+        <h2>Location:</h2>
+        <p>Düsseldorf</p>
+        <!-- Replace with your own map image of Düsseldorf with a pin -->
+        <img src="dusseldorf-map.jpg" alt="Düsseldorf Map" />
+        <p>With: Yours Truly, Philip</p>
+      </div>
+      <!-- Right Column: Clickable Checklist -->
+      <div class="checklist-right">
+        <h2>Checklist:</h2>
+        <ul>
+          <li onclick="toggleCheck(this)">Dress Cute</li>
+          <li onclick="toggleCheck(this)">Smile</li>
+          <li onclick="toggleCheck(this)">Bring your gorgeous self</li>
+          <li onclick="toggleCheck(this)">Be ready for surprises</li>
+          <li onclick="toggleCheck(this)">Let's have fun together</li>
+        </ul>
+      </div>
+    </div>
+    <!-- Button to redirect to final page -->
+    <button id="checklist-button" class="checklist-button" onclick="redirectToFinalPage()" disabled>Complete Checklist to Proceed</button>
+  </div>
+  
+  <!-- Final Page -->
+  <div id="final-page" class="final-page">
+    <h1>Thank you for saying yes! 💖</h1>
+    <img src="final-image.jpg" alt="Final Image" />
+  </div>
+  
+  <script>
+    // ---------- Beginning Page Transition ----------
+    function openLetter() {
+      const beginningPage = document.getElementById('beginning-page');
+      beginningPage.style.opacity = 0;
+      setTimeout(() => {
+        beginningPage.style.display = 'none';
+        document.getElementById('first-page').style.display = 'flex';
+      }, 500);
+    }
+    
+    // ---------- First Page Buttons ----------
+    let redButtonPressCount = 0;
+    let greenButtonPressCount = 0;
+    function handleGreenClick() {
+      greenButtonPressCount++;
+      const greenButton = document.getElementById('green-button');
+      greenButton.style.transform = `scale(${1 + 0.2 * greenButtonPressCount})`;
+      greenButton.style.fontSize = `${1.2 * (1 + 0.2 * greenButtonPressCount)}rem`;
+      greenButton.style.padding = `${12 * (1 + 0.2 * greenButtonPressCount)}px ${28 * (1 + 0.2 * greenButtonPressCount)}px`;
+      if (greenButtonPressCount === 1) {
+        greenButton.textContent = "Really? :)";
+      } else if (greenButtonPressCount === 2) {
+        greenButton.textContent = "Are you serious? :3";
+      } else if (greenButtonPressCount === 3) {
+        greenButton.textContent = "OH MY GOD";
+        setTimeout(showHappyPage, 1000);
+      }
+    }
+    
+    function handleRedClick() {
+      redButtonPressCount++;
+      const redButton = document.getElementById('red-button');
+      redButton.style.transform = `scale(${1 + 0.2 * redButtonPressCount})`;
+      redButton.style.fontSize = `${1.2 * (1 + 0.2 * redButtonPressCount)}rem`;
+      redButton.style.padding = `${12 * (1 + 0.2 * redButtonPressCount)}px ${28 * (1 + 0.2 * redButtonPressCount)}px`;
+      if (redButtonPressCount === 1) {
+        redButton.textContent = "Are you sure?";
+      } else if (redButtonPressCount === 2) {
+        redButton.textContent = "I'll be sad";
+      } else if (redButtonPressCount === 3) {
+        document.getElementById('container').style.display = 'none';
+        document.getElementById('sad-page').style.display = 'flex';
+      }
+    }
+    
+    // ---------- Transition to Happy Page ----------
+    function showHappyPage() {
+      document.getElementById('container').style.display = 'none';
+      document.getElementById('happy-page').style.display = 'flex';
+      startCountdown();
+    }
+    
+    // ---------- Revised Countdown for Happy Page ----------
+    function startCountdown() {
+      const countdownElem = document.getElementById('countdown');
+      let count = 3;
+      function showNext() {
+        if (count <= 0) {
+          countdownElem.style.display = 'none';
+          document.getElementById('final-content').style.display = 'flex';
+          launchConfetti();
+        } else {
+          countdownElem.textContent = count + "...";
+          setTimeout(() => {
+            countdownElem.classList.add("fade-out");
+            setTimeout(() => {
+              countdownElem.classList.remove("fade-out");
+              count--;
+              showNext();
+            }, 800);
+          }, 1000);
+        }
+      }
+      showNext();
+    }
+    
+    // ---------- Confetti Effect ----------
+    function launchConfetti() {
+      const confettiContainer = document.getElementById('confetti');
+      confettiContainer.innerHTML = '';
+      const colors = ['#FFC107', '#FF5722', '#8BC34A', '#00BCD4', '#E91E63'];
+      for (let i = 0; i < 30; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti-piece');
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.animationDelay = Math.random() * 3 + 's';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confettiContainer.appendChild(confetti);
+      }
+    }
+    
+    // ---------- Happy Page Final Buttons ----------
+    function handleHappyYesClick() {
+      document.getElementById('happy-page').style.display = 'none';
+      document.getElementById('checklist-page').style.display = 'flex';
+    }
+    function handleHappyNoClick() {
+      document.getElementById('happy-page').style.display = 'none';
+      document.getElementById('checklist-page').style.display = 'flex';
+    }
+    
+    // ---------- Checklist Toggle Function ----------
+    function toggleCheck(element) {
+      element.classList.toggle("checked");
+      checkCompletion();
+    }
+    
+    // ---------- Check if all checklist items are completed ----------
+    function checkCompletion() {
+      const checklistItems = document.querySelectorAll('.checklist-right li');
+      const checklistButton = document.getElementById('checklist-button');
+      let allChecked = true;
+      checklistItems.forEach(item => {
+        if (!item.classList.contains('checked')) {
+          allChecked = false;
+        }
+      });
+      if (allChecked) {
+        checklistButton.disabled = false;
+        checklistButton.textContent = "Proceed to Final Page";
+      } else {
+        checklistButton.disabled = true;
+        checklistButton.textContent = "Complete Checklist to Proceed";
+      }
+    }
+    
+    // ---------- Redirect to Final Page ----------
+    function redirectToFinalPage() {
+      document.getElementById('checklist-page').style.display = 'none';
+      document.getElementById('final-page').style.display = 'flex';
+    }
+  </script>
+</body>
+</html>
