@@ -6,7 +6,6 @@
   <title>Will You Be My Valentine?</title>
   <!-- Use a clean, modern Google font -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
   <style>
     /* Global Reset & Background with Subtle Dot Pattern */
     html, body {
@@ -26,7 +25,7 @@
       max-width: 1100px;
       height: 90vh;
       margin: 20px auto;
-      border: 4px solid #d32f2f;
+      border: 4px solid #fff; /* White border */
       border-radius: 20px;
       background-color: #fff;
       background-image: radial-gradient(circle, #ff9ef0 1px, transparent 1px);
@@ -221,7 +220,9 @@
     }
     /* ---------- Checklist Page ---------- */
     .checklist-page {
-      background-color: #d32f2f; /* Red background */
+      background-color: #fff;
+      background-image: radial-gradient(circle, #ff9ef0 1px, transparent 1px);
+      background-size: 20px 20px;
       width: 100vw;
       height: 100vh;
       display: none;
@@ -236,33 +237,52 @@
       background-color: #fff;
       border-radius: 20px;
       padding: 20px;
-      max-width: 800px;
+      max-width: 1000px;
       width: 90%;
-      text-align: center;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      display: flex;
+      gap: 40px;
+      justify-content: space-between;
+      align-items: flex-start;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
-    .checklist-container h2 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      font-family: 'Dancing Script', cursive;
+    .checklist-left, .checklist-right {
+      flex: 1;
+    }
+    /* Thin red line to split the page */
+    .checklist-left {
+      border-right: 2px solid #d32f2f;
+      padding-right: 20px;
+    }
+    /* Left column: Location & map info */
+    .checklist-left h2 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      font-weight: 600;
       color: #d32f2f;
     }
-    .checklist-container p {
+    .checklist-left p {
       font-size: 1.4rem;
       margin-bottom: 20px;
-      font-family: 'Dancing Script', cursive;
+      font-weight: 300;
       color: #333;
     }
-    .checklist-container img {
+    .checklist-left img {
       max-width: 100%;
       border-radius: 8px;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
-    .checklist-container ul {
+    /* Right column: Checklist */
+    .checklist-right h2 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: #d32f2f;
+    }
+    .checklist-right ul {
       list-style: none;
       padding: 0;
     }
-    .checklist-container li {
+    .checklist-right li {
       font-size: 1.4rem;
       margin: 10px 0;
       padding: 10px 20px;
@@ -271,14 +291,13 @@
       cursor: pointer;
       position: relative;
       transition: background 0.3s;
-      font-family: 'Dancing Script', cursive;
       color: #333;
     }
-    .checklist-container li.checked {
+    .checklist-right li.checked {
       background-color: #d32f2f;
       color: #fff;
     }
-    .checklist-container li.checked::after {
+    .checklist-right li.checked::after {
       content: "✔";
       position: absolute;
       right: 10px;
@@ -298,7 +317,6 @@
       background-color: #d32f2f;
       color: #fff;
       transition: transform 0.3s ease;
-      font-family: 'Dancing Script', cursive;
     }
     .checklist-button:disabled {
       background-color: #ccc;
@@ -412,19 +430,27 @@
   <!-- Checklist Page -->
   <div id="checklist-page" class="checklist-page">
     <div class="checklist-container">
-      <h2>Details of our special date</h2>
-      <p>Location: Düsseldorf</p>
-      <img src="dusseldorf.jpg" alt="Düsseldorf Map" />
-      <p>With: Yours Truly, Philip</p>
-      <ul>
-        <li onclick="toggleCheck(this)">Dress Cute</li>
-        <li onclick="toggleCheck(this)">Smile</li>
-        <li onclick="toggleCheck(this)">Bring your gorgeous self</li>
-        <li onclick="toggleCheck(this)">Be ready for surprises</li>
-        <li onclick="toggleCheck(this)">Let's have fun together</li>
-      </ul>
-      <button id="checklist-button" class="checklist-button" onclick="redirectToFinalPage()" disabled>Complete Checklist to Proceed</button>
+      <!-- Left Column: Location & Map Info -->
+      <div class="checklist-left">
+        <h2>Details of our special date</h2>
+        <p>Location: Düsseldorf</p>
+        <img src="dusseldorf.jpg" alt="Düsseldorf Map" />
+        <p>With: Yours Truly, Philip</p>
+      </div>
+      <!-- Right Column: Clickable Checklist -->
+      <div class="checklist-right">
+        <h2>Checklist:</h2>
+        <ul>
+          <li onclick="toggleCheck(this)">Dress Cute</li>
+          <li onclick="toggleCheck(this)">Smile</li>
+          <li onclick="toggleCheck(this)">Bring your gorgeous self</li>
+          <li onclick="toggleCheck(this)">Be ready for surprises</li>
+          <li onclick="toggleCheck(this)">Let's have fun together</li>
+        </ul>
+      </div>
     </div>
+    <!-- Button to redirect to final page -->
+    <button id="checklist-button" class="checklist-button" onclick="redirectToFinalPage()" disabled>Complete Checklist to Proceed</button>
   </div>
   
   <!-- Final Page -->
@@ -556,7 +582,7 @@
     
     // ---------- Check if all checklist items are completed ----------
     function checkCompletion() {
-      const checklistItems = document.querySelectorAll('.checklist-container li');
+      const checklistItems = document.querySelectorAll('.checklist-right li');
       const checklistButton = document.getElementById('checklist-button');
       let allChecked = true;
       checklistItems.forEach(item => {
