@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Will You Be My Valentine?</title>
-  <!-- Use a clean, modern Google font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <!-- Use a cute Google font -->
+  <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
     /* Global Reset & Background with Subtle Dot Pattern */
     html, body {
@@ -18,6 +18,27 @@
       background-size: 20px 20px;
       font-family: 'Poppins', sans-serif;
       overflow-x: hidden;
+    }
+    /* Floating Hearts Animation */
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0); }
+    }
+    .floating-hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .floating-hearts span {
+      position: absolute;
+      font-size: 2rem;
+      color: #ff6f91;
+      animation: float 5s infinite ease-in-out;
     }
     /* Container for Beginning and First Pages */
     #container {
@@ -34,6 +55,7 @@
       overflow: hidden;
       position: relative;
       transition: opacity 0.5s ease;
+      z-index: 2;
     }
     /* ---------- Beginning Page ---------- */
     #beginning-page {
@@ -63,6 +85,7 @@
       font-size: 1.4rem;
       color: #d32f2f;
       animation: pop 1s infinite alternate;
+      font-family: 'Indie Flower', cursive;
     }
     @keyframes pop {
       from { transform: scale(1); }
@@ -86,6 +109,7 @@
       font-size: 2.8rem;
       margin-bottom: 20px;
       font-weight: 600;
+      font-family: 'Indie Flower', cursive;
     }
     #first-page p {
       font-size: 1.4rem;
@@ -111,19 +135,24 @@
       border-radius: 8px;
       cursor: pointer;
       color: #fff;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      font-family: 'Indie Flower', cursive;
     }
     .green {
       background-color: #4caf50;
     }
     .green:hover {
       background-color: #43a047;
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
     .red {
       background-color: #f44336;
     }
     .red:hover {
       background-color: #e53935;
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
     /* ---------- Sad Page ---------- */
     .sad-page {
@@ -153,6 +182,7 @@
       font-size: 2.5rem;
       margin-bottom: 10px;
       font-weight: 400;
+      font-family: 'Indie Flower', cursive;
     }
     .rain {
       position: absolute;
@@ -195,6 +225,7 @@
       font-size: 4rem;
       opacity: 1;
       transition: opacity 0.8s ease-in-out;
+      font-family: 'Indie Flower', cursive;
     }
     .fade-out {
       opacity: 0 !important;
@@ -261,6 +292,7 @@
       margin-bottom: 10px;
       font-weight: 600;
       color: #d32f2f;
+      font-family: 'Indie Flower', cursive;
     }
     .checklist-left p {
       font-size: 1.4rem;
@@ -282,6 +314,7 @@
       margin-bottom: 10px;
       font-weight: 600;
       color: #d32f2f;
+      font-family: 'Indie Flower', cursive;
     }
     .checklist-right ul {
       list-style: none;
@@ -295,8 +328,11 @@
       border-radius: 8px;
       cursor: pointer;
       position: relative;
-      transition: background 0.3s;
+      transition: background 0.3s, transform 0.3s;
       color: #333;
+    }
+    .checklist-right li:hover {
+      transform: scale(1.05);
     }
     .checklist-right li.checked {
       background-color: #d32f2f;
@@ -321,7 +357,8 @@
       cursor: pointer;
       background-color: #d32f2f;
       color: #fff;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      font-family: 'Indie Flower', cursive;
     }
     .checklist-button:disabled {
       background-color: #ccc;
@@ -329,6 +366,7 @@
     }
     .checklist-button:hover:not(:disabled) {
       transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
     /* ---------- Final Page ---------- */
     .final-page {
@@ -346,6 +384,7 @@
     .final-page h1 {
       font-size: 3rem;
       margin-bottom: 20px;
+      font-family: 'Indie Flower', cursive;
     }
     .final-page img {
       max-width: 90%;
@@ -388,6 +427,18 @@
   </style>
 </head>
 <body>
+  <!-- Floating Hearts Animation -->
+  <div class="floating-hearts">
+    <span style="left: 10%; animation-delay: 0s;">❤️</span>
+    <span style="left: 20%; animation-delay: 2s;">💖</span>
+    <span style="left: 30%; animation-delay: 4s;">💕</span>
+    <span style="left: 40%; animation-delay: 6s;">💘</span>
+    <span style="left: 50%; animation-delay: 8s;">💓</span>
+    <span style="left: 60%; animation-delay: 10s;">💝</span>
+    <span style="left: 70%; animation-delay: 12s;">💞</span>
+    <span style="left: 80%; animation-delay: 14s;">💗</span>
+    <span style="left: 90%; animation-delay: 16s;">💟</span>
+  </div>
   <!-- Container for Beginning and First Pages -->
   <div id="container">
     <!-- Beginning Page -->
