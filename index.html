@@ -234,20 +234,53 @@
       transition: opacity 0.5s ease;
     }
     .checklist-container {
-      max-width: 800px;
-      width: 100%;
-      text-align: center;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      justify-content: center;
+      align-items: flex-start;
+      max-width: 1000px;
+      margin: 0 auto;
     }
-    .checklist-container h2 {
+    .checklist-left, .checklist-right {
+      flex: 1 1 300px;
+      min-width: 300px;
+    }
+    /* Thin red line to split the page */
+    .checklist-left {
+      border-right: 2px solid #d32f2f;
+      padding-right: 20px;
+    }
+    /* Left column: Location & map info */
+    .checklist-left h2 {
       font-size: 2rem;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       font-weight: 600;
+      color: #d32f2f;
     }
-    .checklist-container ul {
+    .checklist-left p {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+      font-weight: 300;
+      color: #333;
+    }
+    .checklist-left img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    /* Right column: Checklist */
+    .checklist-right h2 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: #d32f2f;
+    }
+    .checklist-right ul {
       list-style: none;
       padding: 0;
     }
-    .checklist-container li {
+    .checklist-right li {
       font-size: 1.4rem;
       margin: 10px 0;
       padding: 10px 20px;
@@ -258,11 +291,11 @@
       transition: background 0.3s;
       text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
     }
-    .checklist-container li.checked {
+    .checklist-right li.checked {
       background-color: #d32f2f;
       color: #fff;
     }
-    .checklist-container li.checked::after {
+    .checklist-right li.checked::after {
       content: "✔";
       position: absolute;
       right: 10px;
@@ -372,16 +405,28 @@
   <!-- Checklist Page -->
   <div id="checklist-page" class="checklist-page">
     <div class="checklist-container">
-      <h2>Checklist:</h2>
-      <ul>
-        <li onclick="toggleCheck(this)">Dress Cute</li>
-        <li onclick="toggleCheck(this)">Smile</li>
-        <li onclick="toggleCheck(this)">Bring your gorgeous self</li>
-        <li onclick="toggleCheck(this)">Be ready for surprises</li>
-        <li onclick="toggleCheck(this)">Let's have fun together</li>
-      </ul>
-      <button id="checklist-button" class="checklist-button" onclick="redirectToFinalPage()" disabled>Complete Checklist to Proceed</button>
+      <!-- Left Column: Location & Map Info -->
+      <div class="checklist-left">
+        <h2>Details of our special date</h2>
+        <p>Location: Düsseldorf</p>
+        <!-- Replace with your own map image of Düsseldorf with a pin -->
+        <img src="https://via.placeholder.com/400x200.png?text=Düsseldorf+Map" alt="Düsseldorf Map" />
+        <p>With: Yours Truly, Philip</p>
+      </div>
+      <!-- Right Column: Clickable Checklist -->
+      <div class="checklist-right">
+        <h2>Checklist:</h2>
+        <ul>
+          <li onclick="toggleCheck(this)">Dress Cute</li>
+          <li onclick="toggleCheck(this)">Smile</li>
+          <li onclick="toggleCheck(this)">Bring your gorgeous self</li>
+          <li onclick="toggleCheck(this)">Be ready for surprises</li>
+          <li onclick="toggleCheck(this)">Let's have fun together</li>
+        </ul>
+      </div>
     </div>
+    <!-- Button to redirect to final page -->
+    <button id="checklist-button" class="checklist-button" onclick="redirectToFinalPage()" disabled>Complete Checklist to Proceed</button>
   </div>
   
   <!-- Final Page -->
@@ -439,9 +484,13 @@
     
     // ---------- Transition to Happy Page ----------
     function showHappyPage() {
-      document.getElementById('container').style.display = 'none';
-      document.getElementById('happy-page').style.display = 'flex';
-      startCountdown();
+      document.getElementById('container').style.opacity = 0;
+      setTimeout(() => {
+        document.getElementById('container').style.display = 'none';
+        document.getElementById('happy-page').style.display = 'flex';
+        document.getElementById('happy-page').style.opacity = 1;
+        startCountdown();
+      }, 500);
     }
     
     // ---------- Revised Countdown for Happy Page ----------
@@ -485,12 +534,20 @@
     
     // ---------- Happy Page Final Buttons ----------
     function handleHappyYesClick() {
-      document.getElementById('happy-page').style.display = 'none';
-      document.getElementById('checklist-page').style.display = 'flex';
+      document.getElementById('happy-page').style.opacity = 0;
+      setTimeout(() => {
+        document.getElementById('happy-page').style.display = 'none';
+        document.getElementById('checklist-page').style.display = 'flex';
+        document.getElementById('checklist-page').style.opacity = 1;
+      }, 500);
     }
     function handleHappyNoClick() {
-      document.getElementById('happy-page').style.display = 'none';
-      document.getElementById('checklist-page').style.display = 'flex';
+      document.getElementById('happy-page').style.opacity = 0;
+      setTimeout(() => {
+        document.getElementById('happy-page').style.display = 'none';
+        document.getElementById('checklist-page').style.display = 'flex';
+        document.getElementById('checklist-page').style.opacity = 1;
+      }, 500);
     }
     
     // ---------- Checklist Toggle Function ----------
@@ -501,7 +558,7 @@
     
     // ---------- Check if all checklist items are completed ----------
     function checkCompletion() {
-      const checklistItems = document.querySelectorAll('.checklist-container li');
+      const checklistItems = document.querySelectorAll('.checklist-right li');
       const checklistButton = document.getElementById('checklist-button');
       let allChecked = true;
       checklistItems.forEach(item => {
@@ -520,8 +577,12 @@
     
     // ---------- Redirect to Final Page ----------
     function redirectToFinalPage() {
-      document.getElementById('checklist-page').style.display = 'none';
-      document.getElementById('final-page').style.display = 'flex';
+      document.getElementById('checklist-page').style.opacity = 0;
+      setTimeout(() => {
+        document.getElementById('checklist-page').style.display = 'none';
+        document.getElementById('final-page').style.display = 'flex';
+        document.getElementById('final-page').style.opacity = 1;
+      }, 500);
     }
   </script>
 </body>
